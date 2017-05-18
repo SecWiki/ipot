@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mysqlpot | 蜜罐技术研究小组</title>
+  <title>a dynamic honeypot design for intrusion detection | 蜜罐技术研究小组</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="honeypot, honeynet, sec-wiki, cyber, security" />
@@ -11,17 +11,19 @@
   
   
   
-  <meta name="description" content="一个还在早期开发状态的Mysql蜜罐 https://github.com/schmalle/MysqlPot">
-<meta name="keywords" content="蜜罐,数据库,mysql">
+  <meta name="description" content="本文讨论了动态蜜罐的设计，实现了一个可以在动态和连续变化的网络环境下进行自适应部署的蜜罐。这种动态蜜罐实现方法集成了主动和被动探测功能以及一些虚拟蜜罐。这种方法解决了虚拟蜜罐部署和配置困难的问题。">
+<meta name="keywords" content="蜜罐,入侵检测">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysqlpot">
-<meta property="og:url" content="http://ipot.sec-wiki.com/projects/2012-10-15-honeypot-mysqlpot.html">
+<meta property="og:title" content="A Dynamic Honeypot Design for Intrusion Detection">
+<meta property="og:url" content="http://ipot.sec-wiki.com/papers/2004-06-23-A-Dynamic-Honeypot-Design-for-Intrusion-Detection.html">
 <meta property="og:site_name" content="蜜罐技术研究小组">
-<meta property="og:description" content="一个还在早期开发状态的Mysql蜜罐 https://github.com/schmalle/MysqlPot">
-<meta property="og:updated_time" content="2017-05-18T05:53:00.980Z">
+<meta property="og:description" content="本文讨论了动态蜜罐的设计，实现了一个可以在动态和连续变化的网络环境下进行自适应部署的蜜罐。这种动态蜜罐实现方法集成了主动和被动探测功能以及一些虚拟蜜罐。这种方法解决了虚拟蜜罐部署和配置困难的问题。">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/1594613429314.png">
+<meta property="og:updated_time" content="2017-05-18T07:53:30.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysqlpot">
-<meta name="twitter:description" content="一个还在早期开发状态的Mysql蜜罐 https://github.com/schmalle/MysqlPot">
+<meta name="twitter:title" content="A Dynamic Honeypot Design for Intrusion Detection">
+<meta name="twitter:description" content="本文讨论了动态蜜罐的设计，实现了一个可以在动态和连续变化的网络环境下进行自适应部署的蜜罐。这种动态蜜罐实现方法集成了主动和被动探测功能以及一些虚拟蜜罐。这种方法解决了虚拟蜜罐部署和配置困难的问题。">
+<meta name="twitter:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/1594613429314.png">
   
     <link rel="alternate" href="/atom.xml" title="蜜罐技术研究小组" type="application/atom+xml">
   
@@ -119,7 +121,7 @@ var themeMenus = {};
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-honeypot-mysqlpot" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-A-Dynamic-Honeypot-Design-for-Intrusion-Detection" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -127,7 +129,7 @@ var themeMenus = {};
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Mysqlpot
+      A Dynamic Honeypot Design for Intrusion Detection
     </h1>
   
 
@@ -135,8 +137,8 @@ var themeMenus = {};
     
     <div class="article-meta">
       
-	Posted on <a href="/projects/2012-10-15-honeypot-mysqlpot.html" class="article-date">
-	  <time datetime="2012-10-15T04:49:22.000Z" itemprop="datePublished">十月 15, 2012</time>
+	Posted on <a href="/papers/2004-06-23-A-Dynamic-Honeypot-Design-for-Intrusion-Detection.html" class="article-date">
+	  <time datetime="2004-06-23T06:47:17.000Z" itemprop="datePublished">六月 23, 2004</time>
 	</a>
 
       
@@ -147,10 +149,24 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一个还在早期开发状态的Mysql蜜罐</p>
-<p><a href="https://github.com/schmalle/MysqlPot" target="_blank" rel="external">https://github.com/schmalle/MysqlPot</a><br><a id="more"></a></p>
-<p>介绍：</p>
-<p>一款Mysql蜜罐，处于也有可能永远都处于开发状态。</p>
+        <p>本文讨论了动态蜜罐的设计，实现了一个可以在动态和连续变化的网络环境下进行自适应部署的蜜罐。这种动态蜜罐实现方法集成了主动和被动探测功能以及一些虚拟蜜罐。这种方法解决了虚拟蜜罐部署和配置困难的问题。</p>
+<a id="more"></a>
+<p>论文原文</p>
+<p><a href="http://ieeexplore.ieee.org/abstract/document/1372012/" target="_blank" rel="external">http://ieeexplore.ieee.org/abstract/document/1372012/</a></p>
+<p>引用：</p>
+<p><em>Kuwatly I, Sraj M, Al Masri Z, et al. A dynamic honeypot design for intrusion detection[C]//Pervasive Services, 2004. ICPS 2004. IEEE/ACS International Conference on. IEEE, 2004: 95-104.</em></p>
+<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>前言部分列举出当前的网络安全解决方案，包括防火墙、VPN和IDS等，但是这些措施依然不够有效，美国联邦调查局2003年度的计算机犯罪与安全调查表明，2003年因此损失金额201,797,340美元。</p>
+<p>而高级的网络解决方案往往需要企业进行大量的管理配置工作。</p>
+<h2 id="0x02-入侵检测系统"><a href="#0x02-入侵检测系统" class="headerlink" title="0x02 入侵检测系统"></a>0x02 入侵检测系统</h2><p>这一部分介绍了入侵检测系统的类别。</p>
+<h2 id="0x03-相关工作"><a href="#0x03-相关工作" class="headerlink" title="0x03 相关工作"></a>0x03 相关工作</h2><p>这一部分介绍了蜜罐的定义、蜜罐的类型。</p>
+<h2 id="0x04-动态蜜罐"><a href="#0x04-动态蜜罐" class="headerlink" title="0x04 动态蜜罐"></a>0x04 动态蜜罐</h2><p>动态蜜罐概念的产生来源于对蜜网组织想法的响应，如何在网络拓扑结构或者网络技术发生改变后，安全系统依然能够有效运行。</p>
+<p>所以论文作者系统设计实现一种只需要插入组件、不需要持续更新就能正常运作的动态蜜罐。这就要求蜜罐能够识别空闲ip，并在这些ip上进行部署。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/1594613429314.png" alt=""></p>
+<p>这个论文设计架构如上。</p>
+<p>动态蜜罐服务器收集网络中可用主机的信息，黑客的流量通过Honeyd重定向与物理蜜罐进行交互，使用Sebek记录日志并发送到动态蜜罐服务器上。服务器持续分析收集到的数据并发送警报。而整个蜜罐系统的运作模式来源于动态蜜罐服务器所获取到的网络结构，它会根据当前结构来估计需要进行配置的虚假系统的服务和特性，然后生成配置参数给Honeyd，配置出不同的Honeyd蜜罐。</p>
+<p>其中动态蜜罐服务器拥有主动探测（Nmap）、被动探测（P0f）、蜜罐（Honeyd、物理蜜罐）、数据库、动态配置生成器几部分组成。</p>
+<p>论文还着重讨论了整个设计的性能参数，测试环境是一个拥有70-75台电脑，3个打印机的环境，系统涵盖Windos和Linux。测试得知，动态蜜罐的吞吐量可以达到100万比特。通过测试动态蜜罐中Nmap的收敛时间来衡量整个系统的动态部署时间。</p>
+<h2 id="0x05-总结"><a href="#0x05-总结" class="headerlink" title="0x05 总结"></a>0x05 总结</h2><p>这篇论文主要的亮点是它提出了根据部署环境动态生成蜜罐配置，来适应变化的网络拓扑，另外一点是它混合使用两种高低交互的蜜罐，使用低交互蜜罐先获取流量，再将无法处理的流量转发到高交互蜜罐中。</p>
 
         
       
@@ -159,11 +175,11 @@ var themeMenus = {};
     <footer class="entry-meta entry-footer">
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/projects/">projects</a>
+    <a class="article-category-link" href="/categories/papers/">papers</a>
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蜜罐/">蜜罐</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/入侵检测/">入侵检测</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蜜罐/">蜜罐</a></li></ul>
 
       
         
@@ -189,20 +205,15 @@ var themeMenus = {};
     
 <nav id="article-nav">
   
-    <a href="/projects/2014-08-25-honeypot-espot.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/projects/2012-10-15-honeypot-mysqlpot.html" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          Espot
+          Mysqlpot
         
       </div>
     </a>
   
-  
-    <a href="/papers/2004-06-23-A-Dynamic-Honeypot-Design-for-Intrusion-Detection.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">A Dynamic Honeypot Design for Intrusion Detection</div>
-    </a>
   
 </nav>
 
@@ -215,7 +226,7 @@ var themeMenus = {};
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav">无</ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-前言"><span class="nav-number">1.</span> <span class="nav-text">0x01 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-入侵检测系统"><span class="nav-number">2.</span> <span class="nav-text">0x02 入侵检测系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-相关工作"><span class="nav-number">3.</span> <span class="nav-text">0x03 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-动态蜜罐"><span class="nav-number">4.</span> <span class="nav-text">0x04 动态蜜罐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-总结"><span class="nav-number">5.</span> <span class="nav-text">0x05 总结</span></a></li></ol>
     
     </div>
   </aside>
