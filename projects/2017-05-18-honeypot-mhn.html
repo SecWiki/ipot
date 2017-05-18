@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>delilah | 蜜罐技术研究小组</title>
+  <title>mhn | 蜜罐技术研究小组</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="honeypot, honeynet, sec-wiki, cyber, security" />
@@ -11,17 +11,17 @@
   
   
   
-  <meta name="description" content="一个识别攻击命令、侦查行为以及下载命令的elasticsearch蜜罐 https://github.com/Novetta/delilah">
-<meta name="keywords" content="蜜罐,数据库,elasticsearch">
+  <meta name="description" content="现代蜜网项目是Anomali公司的一款集管理界面、蜜罐部署于一体的蜜罐项目，支持多种检测规则，支持多种蜜罐节点，支持可视化界面管理，支持多用户 https://github.com/threatstream/mhn">
+<meta name="keywords" content="蜜网">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Delilah">
-<meta property="og:url" content="http://ipot.sec-wiki.com/projects/2015-05-10-honeypot-delilah.html">
+<meta property="og:title" content="Mhn">
+<meta property="og:url" content="http://ipot.sec-wiki.com/projects/2017-05-18-honeypot-mhn.html">
 <meta property="og:site_name" content="蜜罐技术研究小组">
-<meta property="og:description" content="一个识别攻击命令、侦查行为以及下载命令的elasticsearch蜜罐 https://github.com/Novetta/delilah">
-<meta property="og:updated_time" content="2017-05-18T06:07:34.948Z">
+<meta property="og:description" content="现代蜜网项目是Anomali公司的一款集管理界面、蜜罐部署于一体的蜜罐项目，支持多种检测规则，支持多种蜜罐节点，支持可视化界面管理，支持多用户 https://github.com/threatstream/mhn">
+<meta property="og:updated_time" content="2017-05-18T09:30:00.356Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Delilah">
-<meta name="twitter:description" content="一个识别攻击命令、侦查行为以及下载命令的elasticsearch蜜罐 https://github.com/Novetta/delilah">
+<meta name="twitter:title" content="Mhn">
+<meta name="twitter:description" content="现代蜜网项目是Anomali公司的一款集管理界面、蜜罐部署于一体的蜜罐项目，支持多种检测规则，支持多种蜜罐节点，支持可视化界面管理，支持多用户 https://github.com/threatstream/mhn">
   
     <link rel="alternate" href="/atom.xml" title="蜜罐技术研究小组" type="application/atom+xml">
   
@@ -119,7 +119,7 @@ var themeMenus = {};
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-honeypot-delilah" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-honeypot-mhn" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -127,7 +127,7 @@ var themeMenus = {};
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Delilah
+      Mhn
     </h1>
   
 
@@ -135,8 +135,8 @@ var themeMenus = {};
     
     <div class="article-meta">
       
-	Posted on <a href="/projects/2015-05-10-honeypot-delilah.html" class="article-date">
-	  <time datetime="2015-05-10T05:57:48.000Z" itemprop="datePublished">五月 10, 2015</time>
+	Posted on <a href="/projects/2017-05-18-honeypot-mhn.html" class="article-date">
+	  <time datetime="2017-05-18T09:20:03.000Z" itemprop="datePublished">五月 18, 2017</time>
 	</a>
 
       
@@ -147,11 +147,15 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一个识别攻击命令、侦查行为以及下载命令的elasticsearch蜜罐</p>
-<p><a href="https://github.com/Novetta/delilah" target="_blank" rel="external">https://github.com/Novetta/delilah</a></p>
+        <p>现代蜜网项目是Anomali公司的一款集管理界面、蜜罐部署于一体的蜜罐项目，支持多种检测规则，支持多种蜜罐节点，支持可视化界面管理，支持多用户</p>
+<p><a href="https://github.com/threatstream/mhn" target="_blank" rel="external">https://github.com/threatstream/mhn</a></p>
 <a id="more"></a>
 <p>介绍：</p>
-<p>安全公司Novetta的elasticsearch蜜罐，由elastichoney启发而来，它会执行攻击者的下载指令以获取攻击样本并会发送攻击向量到指定的邮箱。整个程序自带web管理端，使用Python语言编写。</p>
+<p>MHN包含以下几部分：</p>
+<blockquote>
+<p>蜜罐节点：支持包括Dionaea、Kippo、Snort、Conpot等多个开源蜜罐</p>
+<p>管理服务器：使用Flask框架，通过API交互完成部署脚本下载，蜜罐信息接收、入侵规则更新、可视化展示等功能</p>
+</blockquote>
 
         
       
@@ -164,7 +168,7 @@ var themeMenus = {};
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蜜罐/">蜜罐</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/蜜网/">蜜网</a></li></ul>
 
       
         
@@ -190,19 +194,10 @@ var themeMenus = {};
     
 <nav id="article-nav">
   
-    <a href="/projects/2015-06-06-honeypot-elastichoney.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Elastichoney
-        
-      </div>
-    </a>
   
-  
-    <a href="/projects/2014-08-25-honeypot-espot.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/datasets/2017-05-18-Dataset20170518.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Espot</div>
+      <div class="article-nav-title">Dataset模板</div>
     </a>
   
 </nav>
