@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/9.jpg">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/10.jpg">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/11.jpg">
-<meta property="og:updated_time" content="2017-05-18T03:44:01.672Z">
+<meta property="og:updated_time" content="2017-05-22T08:45:35.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MHN开源蜜罐项目学习笔记（一）HPFEEDS协议">
 <meta name="twitter:description" content="Hpfeeds和蜜罐是一对好搭档，想要完全掌握一个分布式蜜罐的信息传递，就来了解Hpfeeds协议吧！">
@@ -161,7 +161,7 @@ var themeMenus = {};
       
         <p>Hpfeeds和蜜罐是一对好搭档，想要完全掌握一个分布式蜜罐的信息传递，就来了解Hpfeeds协议吧！</p>
 <a id="more"></a>
-<h2 id="0x00-hpfeeds协议是什么？"><a href="#0x00-hpfeeds协议是什么？" class="headerlink" title="0x00 hpfeeds协议是什么？"></a>0x00 hpfeeds协议是什么？</h2><p>feeds，供稿，原始数据。</p>
+<h2 id="hpfeeds协议是什么？"><a href="#hpfeeds协议是什么？" class="headerlink" title="hpfeeds协议是什么？"></a>hpfeeds协议是什么？</h2><p>feeds，供稿，原始数据。</p>
 <p>hpfeeds是一个轻量级的验证发布-订阅协议(authenticated publish-subscribe protocol)。</p>
 <p>轻量级好理解，就是代码量相对较少，功能相对不复杂。那什么是发布-订阅协议呢？订阅发布协议定义了一种一对多的依赖关系，让多个订阅者对象同时监听某一个主题对象。这个主题对象在自身状态变化时，会通知所有订阅者对象，使它们能够自动更新自己的状态。它是为了解决这样一种情况的发生，一个对象的改变需要同时改变其他对象，而且它不知道具体有多少对象需要改变。我的理解，这就类似于发传单，目标发送通知，没有指定特定的对象，通知会自动传播，观察者自己决定是否需要看传单，发送者对于传单是否被看一无所知。</p>
 <p>详细的发布订阅者介绍可以戳这里：</p>
@@ -194,7 +194,7 @@ payload
 <li>服务器检查数据类型，是要发布还是要订阅</li>
 </ul>
 <p>最终实现服务器、发布者、订阅者之间的解耦，彼此之间完全独立，互不干扰。</p>
-<h2 id="0x01-为什么要用hpfeeds协议"><a href="#0x01-为什么要用hpfeeds协议" class="headerlink" title="0x01 为什么要用hpfeeds协议"></a>0x01 为什么要用hpfeeds协议</h2><p>首先，正如以上所说的，整个协议实现了三方的功能独立。使用这种方式降低了应用与业务逻辑之间的耦合，统一一个对外的发布接口，只需要关心监听的类型，不关心监听的具体处理人。只管发，不管到不到。很方便的建立一种一对多的依赖关系。</p>
+<h2 id="为什么要用hpfeeds协议"><a href="#为什么要用hpfeeds协议" class="headerlink" title="为什么要用hpfeeds协议"></a>为什么要用hpfeeds协议</h2><p>首先，正如以上所说的，整个协议实现了三方的功能独立。使用这种方式降低了应用与业务逻辑之间的耦合，统一一个对外的发布接口，只需要关心监听的类型，不关心监听的具体处理人。只管发，不管到不到。很方便的建立一种一对多的依赖关系。</p>
 <p>在当一个对象的改变需要同时改变其他对象，而且它不知道具体有多少对象需要改变时，就可以使用订阅发布模式。</p>
 <p>hpfeeds协议希望能够实现一个单一的连线形式，使得每一个人都可以在任何时间以任何语言去订阅发布数据，不同的数据以通道来划分，由通道的使用者来决定数据结构形式。而通道的验证通过authkey来完成，它由两部分组成，ident和secret，相当于身份和密码。密码在hash后和每一个临时连接标志一起发送给服务器，这样保证不会被窃听，所以它可以运行在SSL、TLS下。</p>
 <p>优点</p>
@@ -205,7 +205,7 @@ payload
 </ul>
 <p>缺点</p>
 <p>性能降低，订阅要进行管理</p>
-<h2 id="0x02-如何操作"><a href="#0x02-如何操作" class="headerlink" title="0x02 如何操作"></a>0x02 如何操作</h2><p>正常安装使用hpfeeds的步骤如下：</p>
+<h2 id="如何操作"><a href="#如何操作" class="headerlink" title="如何操作"></a>如何操作</h2><p>正常安装使用hpfeeds的步骤如下：</p>
 <pre><code>git clone https://github.com/rep/hpfeeds/
 cd hpfeeds
 python setup.py build
@@ -317,7 +317,7 @@ python setup.py install
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-hpfeeds协议是什么？"><span class="nav-number">1.</span> <span class="nav-text">0x00 hpfeeds协议是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-为什么要用hpfeeds协议"><span class="nav-number">2.</span> <span class="nav-text">0x01 为什么要用hpfeeds协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-如何操作"><span class="nav-number">3.</span> <span class="nav-text">0x02 如何操作</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hpfeeds协议是什么？"><span class="nav-number">1.</span> <span class="nav-text">hpfeeds协议是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要用hpfeeds协议"><span class="nav-number">2.</span> <span class="nav-text">为什么要用hpfeeds协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何操作"><span class="nav-number">3.</span> <span class="nav-text">如何操作</span></a></li></ol>
     
     </div>
   </aside>

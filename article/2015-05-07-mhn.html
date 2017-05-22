@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://ipot.sec-wiki.com/article/2015-05-07-mhn.html">
 <meta property="og:site_name" content="蜜罐技术研究小组">
 <meta property="og:description" content="本文作者：我是壮丁，转载自原wooyun知识库 http://drops.wooyun.org/papers/5968">
-<meta property="og:updated_time" content="2017-05-22T07:43:42.276Z">
+<meta property="og:updated_time" content="2017-05-22T08:45:21.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mhn现代蜜网">
 <meta name="twitter:description" content="本文作者：我是壮丁，转载自原wooyun知识库 http://drops.wooyun.org/papers/5968">
@@ -150,10 +150,10 @@ var themeMenus = {};
         <p>本文作者：我是壮丁，转载自原wooyun知识库</p>
 <p><a href="http://drops.wooyun.org/papers/5968" target="_blank" rel="external">http://drops.wooyun.org/papers/5968</a></p>
 <a id="more"></a>
-<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>From: <a href="https://itandsecuritystuffs.wordpress.com/2015/02/03/honeypot-networks/" target="_blank" rel="external">https://itandsecuritystuffs.wordpress.com/2015/02/03/honeypot-networks/</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>From: <a href="https://itandsecuritystuffs.wordpress.com/2015/02/03/honeypot-networks/" target="_blank" rel="external">https://itandsecuritystuffs.wordpress.com/2015/02/03/honeypot-networks/</a></p>
 <p>PS：测试过程中有的忘记截图了，就直接用的原文章的图片。翻译过程中做了少量的修改，英语好的可以直接看原文。</p>
 <p>这篇文章中，主要讨论蜜罐和蜜罐网络，以及如何使用它们保护真实的系统，我们称之为这个系统为MHN(Modern Honey Network，现代蜜网)，它可以快速部署、使用，也能够快速的从节点收集数据。</p>
-<h2 id="0x01-什么是蜜罐"><a href="#0x01-什么是蜜罐" class="headerlink" title="0x01 什么是蜜罐"></a>0x01 什么是蜜罐</h2><p>蜜罐是存在漏洞的，暴露在外网或者内网的一个虚假的机器,具有以下这些特征：</p>
+<h2 id="什么是蜜罐"><a href="#什么是蜜罐" class="headerlink" title="什么是蜜罐"></a>什么是蜜罐</h2><p>蜜罐是存在漏洞的，暴露在外网或者内网的一个虚假的机器,具有以下这些特征：</p>
 <p>1.其中重要的一点机器是虚假的，攻击者需要花费时间攻破。在这段时间内，系统管理员能够锁定攻击者同时保护真正的机器。</p>
 <p>2.能够学习攻击者针对该服务的攻击技巧和利用代码。</p>
 <p>3.一些蜜罐能够捕获恶意软件，利用代码等等，能够捕获攻击者的0day,同时可以帮助逆向工程师通过分析捕获的恶意软件来提高自身系统的安全性</p>
@@ -172,7 +172,7 @@ var themeMenus = {};
 <p><a href="https://www.projecthoneypot.org/，攻击者的ＩＰ和攻击者的一些数据统计。" target="_blank" rel="external">https://www.projecthoneypot.org/，攻击者的ＩＰ和攻击者的一些数据统计。</a></p>
 <p>4.蜜罐的wiki：</p>
 <p><a href="http://en.wikipedia.org/wiki/Honeypot_(computing" target="_blank" rel="external">http://en.wikipedia.org/wiki/Honeypot_(computing</a>)</p>
-<h2 id="0x02-现代密网（MHN）"><a href="#0x02-现代密网（MHN）" class="headerlink" title="0x02 现代密网（MHN）"></a>0x02 现代密网（MHN）</h2><p>MHN是一个开源软件，它简化了蜜罐的部署，同时便于收集和统计蜜罐的数据。用ThreatStream（<a href="http://threatstream.github.io/mhn/）来部署，MHN使用开源蜜罐来收集数据，整理后保存在Mongodb中，收集到的信息也可以通过web接口来展示或者通过开发的API访问。" target="_blank" rel="external">http://threatstream.github.io/mhn/）来部署，MHN使用开源蜜罐来收集数据，整理后保存在Mongodb中，收集到的信息也可以通过web接口来展示或者通过开发的API访问。</a></p>
+<h2 id="现代密网（MHN）"><a href="#现代密网（MHN）" class="headerlink" title="现代密网（MHN）"></a>现代密网（MHN）</h2><p>MHN是一个开源软件，它简化了蜜罐的部署，同时便于收集和统计蜜罐的数据。用ThreatStream（<a href="http://threatstream.github.io/mhn/）来部署，MHN使用开源蜜罐来收集数据，整理后保存在Mongodb中，收集到的信息也可以通过web接口来展示或者通过开发的API访问。" target="_blank" rel="external">http://threatstream.github.io/mhn/）来部署，MHN使用开源蜜罐来收集数据，整理后保存在Mongodb中，收集到的信息也可以通过web接口来展示或者通过开发的API访问。</a></p>
 <p>MHN能够提供多种开源的蜜罐，可以通过web接口来添加他们。一个蜜罐的部署过程很简单，只需要粘贴，复制一些命令就可以完成部署，部署完成后，可以通过开源的协议hpfeeds来收集的信息。</p>
 <p>MHN支持以下蜜罐：</p>
 <p>1.Sort:<a href="https://www.snort.org/" target="_blank" rel="external">https://www.snort.org/</a></p>
@@ -185,7 +185,7 @@ var themeMenus = {};
 <p>8.Wordpot：<a href="https://github.com/gbrindisi/wordpot" target="_blank" rel="external">https://github.com/gbrindisi/wordpot</a></p>
 <p>9.ShockPot：<a href="https://github.com/threatstream/shockpot，模拟的CVE-2014-6271，即破壳漏洞" target="_blank" rel="external">https://github.com/threatstream/shockpot，模拟的CVE-2014-6271，即破壳漏洞</a></p>
 <p>10.p0f：<a href="https://github.com/p0f/p0f" target="_blank" rel="external">https://github.com/p0f/p0f</a></p>
-<h2 id="0x03-MHN的硬件要求"><a href="#0x03-MHN的硬件要求" class="headerlink" title="0x03 MHN的硬件要求"></a>0x03 MHN的硬件要求</h2><p>MHN服务器：</p>
+<h2 id="MHN的硬件要求"><a href="#MHN的硬件要求" class="headerlink" title="MHN的硬件要求"></a>MHN的硬件要求</h2><p>MHN服务器：</p>
 <blockquote>
 <p>4 GB Ram</p>
 <p>Dual Core Processor</p>
@@ -198,7 +198,7 @@ var themeMenus = {};
 <p>20 Gb Drive</p>
 </blockquote>
 <p>具体部署时取决以蜜罐所在的位置，在防火墙后面或者在直接暴露在互联网上，被攻击次数不同，消耗的资源肯定也不同。如果只是测试着玩256M的内存就足够了。</p>
-<h2 id="0x04-MHN的安装"><a href="#0x04-MHN的安装" class="headerlink" title="0x04 MHN的安装"></a>0x04 MHN的安装</h2><p>因为ThreatStream有部署脚本，所以安装MHN很简单，我们在只安装了OpenSSH的Ubuntu 14.04 LTS (64 bits)上进行测试，安装步骤如下：</p>
+<h2 id="MHN的安装"><a href="#MHN的安装" class="headerlink" title="MHN的安装"></a>MHN的安装</h2><p>因为ThreatStream有部署脚本，所以安装MHN很简单，我们在只安装了OpenSSH的Ubuntu 14.04 LTS (64 bits)上进行测试，安装步骤如下：</p>
 <pre><code>#!bash    
 sudo apt-get update &amp;&amp; sudo apt-get upgrade
 sudo apt-get install git
@@ -261,7 +261,7 @@ Mail default sender [“”]:
 
 Path for log file [“mhn.log”]:
 </code></pre><p>这个过程需要比较长的时间，需要初始化数据库，同时还要插入Snort/Suricata规则，脚本运行结束后，直接访问配置中定义的base url，登录后就可以配置</p>
-<h2 id="0x06-MHN服务器安装"><a href="#0x06-MHN服务器安装" class="headerlink" title="0x06 MHN服务器安装"></a>0x06 MHN服务器安装</h2><p>一旦安装了基础的服务，就能够部署蜜罐节点了，通过web来展示相关数据等等，可以根据具体的境况做一些简单的调整。</p>
+<h2 id="MHN服务器安装"><a href="#MHN服务器安装" class="headerlink" title="MHN服务器安装"></a>MHN服务器安装</h2><p>一旦安装了基础的服务，就能够部署蜜罐节点了，通过web来展示相关数据等等，可以根据具体的境况做一些简单的调整。</p>
 <p>例如要非匿名的将收集到得攻击数据回传到ThreatStream，要做以下操作</p>
 <pre><code>#!bash
 cd /opt/mhn/scripts
@@ -284,7 +284,7 @@ cd server
 python manual_password_reset.py
 deactivate
 exit
-</code></pre><h2 id="0x07-排错"><a href="#0x07-排错" class="headerlink" title="0x07 排错"></a>0x07 排错</h2><p>如果发现服务不正常，你可以使用一些命令和排查一些日志来来判断问题出在哪里，第一个命令就是supervisorctl，可以看到那些进程出问题了，那些在正常的运行</p>
+</code></pre><h2 id="排错"><a href="#排错" class="headerlink" title="排错"></a>排错</h2><p>如果发现服务不正常，你可以使用一些命令和排查一些日志来来判断问题出在哪里，第一个命令就是supervisorctl，可以看到那些进程出问题了，那些在正常的运行</p>
 <pre><code>#!bash    
 supervisorctlv status
 
@@ -302,8 +302,7 @@ hg clone http://code.google.com/p/go.net/
 mv go.net/ /opt/honeymap/server/src/code.google.com/p/
 go build
 supervisorctl restart honeymap
-</code></pre><p>0x08 MNH的web接口</p>
-<p>MHN的web接口是很简洁明了的，第一次访问web截面时，需要输入账户名和密码，登录成功后会看见一个总结性的页面</p>
+</code></pre><h2 id="MNH的web接口"><a href="#MNH的web接口" class="headerlink" title="MNH的web接口"></a>MNH的web接口</h2><p>MHN的web接口是很简洁明了的，第一次访问web截面时，需要输入账户名和密码，登录成功后会看见一个总结性的页面</p>
 <p>1.在最近24小时内有多少攻击着攻击</p>
 <p>2.攻击次数排在前五的IP</p>
 <p>3.被攻击端口排在前五的端口</p>
@@ -317,8 +316,8 @@ supervisorctl restart honeymap
 <p>Seneors:有安装蜜罐节点操作的相关记录</p>
 <p>Settings:MHN服务的设置</p>
 <p>攻击来源全球的分布图,运行在3000端口，是不需要验证就能看到的，可以做ACL开控制访问。</p>
-<h2 id="0x09-蜜罐节点"><a href="#0x09-蜜罐节点" class="headerlink" title="0x09 蜜罐节点"></a>0x09 蜜罐节点</h2><p>这一节中，主要讨论蜜罐，如何安装，多么容易操作，以及会出现的问题，是否需要在进行特殊的配置等等。也会进行一些测试，看攻击者如何攻击，蜜罐对攻击行为的记录。最后会讨论MHN如何收集信息，以及web所展现的数据。</p>
-<h3 id="9-1-安装蜜罐节点"><a href="#9-1-安装蜜罐节点" class="headerlink" title="9.1 安装蜜罐节点"></a>9.1 安装蜜罐节点</h3><p>安装蜜罐节点很容易，所有的节点都基于同样的平台，MHN上对每个蜜罐都有对应的安装脚本，所以安装起来是非常容易的，只需要一个服务器去安装。</p>
+<h2 id="蜜罐节点"><a href="#蜜罐节点" class="headerlink" title="蜜罐节点"></a>蜜罐节点</h2><p>这一节中，主要讨论蜜罐，如何安装，多么容易操作，以及会出现的问题，是否需要在进行特殊的配置等等。也会进行一些测试，看攻击者如何攻击，蜜罐对攻击行为的记录。最后会讨论MHN如何收集信息，以及web所展现的数据。</p>
+<h3 id="安装蜜罐节点"><a href="#安装蜜罐节点" class="headerlink" title="安装蜜罐节点"></a>安装蜜罐节点</h3><p>安装蜜罐节点很容易，所有的节点都基于同样的平台，MHN上对每个蜜罐都有对应的安装脚本，所以安装起来是非常容易的，只需要一个服务器去安装。</p>
 <p>我们在Ubuntu 14.04 LTS 上进行测试。建议通过ssh去访问，如果不可以，请安装ssh，修改对应的22端口，同时加防火墙保护</p>
 <p>安装ssh</p>
 <pre><code>#!bash
@@ -339,7 +338,7 @@ sudo netstat –tunlp
 ＃产看当前的网络连接情况
 supervisorctl status
 #查看运行状态
-</code></pre><h3 id="9-2-Wordpot"><a href="#9-2-Wordpot" class="headerlink" title="9.2 Wordpot"></a>9.2 Wordpot</h3><p>首先，安装一个wordpress蜜罐在Ubuntu 14.04 LTS上，安装完成后 sudo netstat –tunlp查看80端口是否打开， sudo supervisorctl status可以查看服务的运行状态。 访问后该ip,看到下图</p>
+</code></pre><h3 id="Wordpot"><a href="#Wordpot" class="headerlink" title="Wordpot"></a>Wordpot</h3><p>首先，安装一个wordpress蜜罐在Ubuntu 14.04 LTS上，安装完成后 sudo netstat –tunlp查看80端口是否打开， sudo supervisorctl status可以查看服务的运行状态。 访问后该ip,看到下图</p>
 <p>如果想更改wp的插件和相关设置，</p>
 <pre><code>#!bash
 vim /opt/wordpot/wordpot.conf
@@ -350,7 +349,7 @@ nmap -A -Pn -p80 192.168.10.21
 <p>使用wpscan进行扫描</p>
 <pre><code>#!bash
 wpscan –url http://ip/
-</code></pre><h3 id="9-3-p0f被动指纹识别系统"><a href="#9-3-p0f被动指纹识别系统" class="headerlink" title="9.3 p0f被动指纹识别系统"></a>9.3 p0f被动指纹识别系统</h3><p>p0f是一个被动的系统指纹识别工具，借助它可以快速识别操作系统的类型和其他的信息，它在MHN中部署也是很容易的，p0f有可以根据已有的指纹，能够快速的匹配，虽然不是一个精确计算，但是识别度很高。</p>
+</code></pre><h3 id="p0f被动指纹识别系统"><a href="#p0f被动指纹识别系统" class="headerlink" title="p0f被动指纹识别系统"></a>p0f被动指纹识别系统</h3><p>p0f是一个被动的系统指纹识别工具，借助它可以快速识别操作系统的类型和其他的信息，它在MHN中部署也是很容易的，p0f有可以根据已有的指纹，能够快速的匹配，虽然不是一个精确计算，但是识别度很高。</p>
 <p>通过netstat命令的输出可以看到没有p0f没有去新建新的进程来实现网络监听。</p>
 <p>如果所要保护的ssh端口处于防火墙后或者前端有一个IPS/IDS，获取这些数据的时候就比较麻烦。</p>
 <p>如果我们在安装了wordpot的机器上安装p0f，一个访问wordpot的80端口的请求不会触发wordpot的报警，但是p0f会触发，MHN只是能够显示攻击者攻击的端口，但是不能显示关于操作系统类型，uptime和其他的信息。p0f的日志是纯文本的，分析和收集数据不是太容易，还好p0f存在API，还有一些其他的工具，可以帮助我们快速分析。</p>
@@ -358,7 +357,7 @@ wpscan –url http://ip/
 <pre><code>#!bash
 grep -n “\[ 192.168.10.151.*\(syn\)\|os\s*=” /var/log/p0f.out
 </code></pre><p>如果想要获得更多关于p0f的信息，访问 <a href="http://www.sans.org/security-resources/idfaq/p0f.php，查看相关接口信息https://github.com/p0f/p0f/blob/master/docs/README，还有很重要的一点，p0f把攻击的信息保存在MHN服务的mongodb中，其他的一些信息，如操作系统类型等信息没有展现出来，有可能下一个版本会对这些信息进行展示。" target="_blank" rel="external">http://www.sans.org/security-resources/idfaq/p0f.php，查看相关接口信息https://github.com/p0f/p0f/blob/master/docs/README，还有很重要的一点，p0f把攻击的信息保存在MHN服务的mongodb中，其他的一些信息，如操作系统类型等信息没有展现出来，有可能下一个版本会对这些信息进行展示。</a></p>
-<h3 id="9-4-kippo蜜罐"><a href="#9-4-kippo蜜罐" class="headerlink" title="9.4 kippo蜜罐"></a>9.4 kippo蜜罐</h3><p>kippo是一个中等交互式的ssh蜜罐，安装它很容易，但是要注意以下</p>
+<h3 id="kippo蜜罐"><a href="#kippo蜜罐" class="headerlink" title="kippo蜜罐"></a>kippo蜜罐</h3><p>kippo是一个中等交互式的ssh蜜罐，安装它很容易，但是要注意以下</p>
 <p>1.ssh服务默认监听的是22端口，/etc/ssh/sshd_config为默认配置文件，要想正常运行，需要修改监听端口到2222。</p>
 <p>2.安装完成后需要重启服务。</p>
 <p>3.supervisor可以使kippo程序运行，但是不能够停止它，这需要修改部署脚本</p>
@@ -385,17 +384,17 @@ stopasgroup=true
 <pre><code>#!bash
 medusa -u root -P darkc0de.lst -M ssh -h 192.168.10.21
 </code></pre><p>每进行一次尝试登录，都会产生一条扫描记录，如果想更了解kippo，可以参考<a href="http://edgis-security.org/honeypot/kippo/" target="_blank" rel="external">http://edgis-security.org/honeypot/kippo/</a></p>
-<h3 id="9-5-Suricata网络入侵检测和阻止引擎"><a href="#9-5-Suricata网络入侵检测和阻止引擎" class="headerlink" title="9.5 Suricata网络入侵检测和阻止引擎"></a>9.5 Suricata网络入侵检测和阻止引擎</h3><p>Suricata的部署脚本没有问题，直接执行就好了，部署完成后需要重启服务。Suricata是一个IDS,监听的接口为eth0,规则是通过crontab中的/etc/cron.daily/update_suricata_rules.sh脚本，每天都从MHN服务更新的(可以开启或者关闭规则)</p>
+<h3 id="Suricata网络入侵检测和阻止引擎"><a href="#Suricata网络入侵检测和阻止引擎" class="headerlink" title="Suricata网络入侵检测和阻止引擎"></a>Suricata网络入侵检测和阻止引擎</h3><p>Suricata的部署脚本没有问题，直接执行就好了，部署完成后需要重启服务。Suricata是一个IDS,监听的接口为eth0,规则是通过crontab中的/etc/cron.daily/update_suricata_rules.sh脚本，每天都从MHN服务更新的(可以开启或者关闭规则)</p>
 <p>正如supervisor显示的，只有一个进程，没有生成其他的服务，因为他只是一个IDS,如果我们使用nmap进行扫描，只看到一个ssh服务，这侧扫描会被记录，同时在MHN中显示</p>
 <p>Suricata只会把攻击报告给MHN服务，但是攻击细节存储在Suricata的日志中，不会被显示</p>
 <p>1./var/log/suricata.log:日志记录了Suricata进程相关的信息，如启动报错，错误的规则等等，这份日志由supervisor产生<br>2./var/log/suricata/：设计到suricata操作的输入日志，报警日志，http请求日志，dns请求日志等等<br>3./var/log/suricata/http.log：http请求，不是报警<br>4./var/log/suricata/fast.log：一行存储一个报警<br>5./var/log/suricata/eve.json：格式为json，包含报警和相关的事件<br>6./var/log/suricata/unified2.alert：报警文件为Barnyard2格式<br>（<a href="http://www.forensicswiki.org/wiki/Barnyard2）" target="_blank" rel="external">http://www.forensicswiki.org/wiki/Barnyard2）</a></p>
 <p>Suricata的配置文件</p>
 <p>1./opt/suricata/etc/suricata/classification.config :报警的优先级<br>2./opt/suricata/etc/suricata/reference.config ：使用的漏洞数据库<br>3./opt/suricata/etc/suricata/suricata.yaml ：suricata的配置文件<br>4./opt/suricata/etc/suricata/reference.config ：通过配置来减少报警的数量，例如不想记录所有ICMP请求的来源为一样的ＩＰ<br>IDS/IPS配置是很复杂的，这里只是简单的说明，需要详细了解suricata的，访问这里<a href="http://suricata-ids.org/docs/" target="_blank" rel="external">http://suricata-ids.org/docs/</a></p>
-<h3 id="9-6-snort"><a href="#9-6-snort" class="headerlink" title="9.6 snort"></a>9.6 snort</h3><p>snort是像Suricata一样的IDS/IPS，和Suricata使用类似的规则，同时工作方式也很像，同样部署脚本没有问题，通过crontab.daily来更新规则库，不会其他用来监听连接的服务</p>
+<h3 id="snort"><a href="#snort" class="headerlink" title="snort"></a>snort</h3><p>snort是像Suricata一样的IDS/IPS，和Suricata使用类似的规则，同时工作方式也很像，同样部署脚本没有问题，通过crontab.daily来更新规则库，不会其他用来监听连接的服务</p>
 <p>它的配置文件和Suricata使用的suricata.yaml很像，它的配置文件为snort.conf，日志存储在/var/log/snort/alert目录下.</p>
 <p>想更加了解snort，访问<a href="https://www.snort.org/" target="_blank" rel="external">https://www.snort.org/</a></p>
-<h3 id="9-7-Amun"><a href="#9-7-Amun" class="headerlink" title="9.7 Amun"></a>9.7 Amun</h3><p>Amun蜜罐已经好久没有更新了，这里不做过多的讨论。</p>
-<h3 id="9-8-Shockpot"><a href="#9-8-Shockpot" class="headerlink" title="9.8 Shockpot"></a>9.8 Shockpot</h3><p>Shockpot是一个web蜜罐，用来模拟破壳漏洞,CVE-2014-6271 <a href="http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-6271,破壳漏洞是一个影响很广泛的漏洞，影响Mac" target="_blank" rel="external">http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-6271,破壳漏洞是一个影响很广泛的漏洞，影响Mac</a> OsX,Linux和Unix，这个漏洞产生在GNU Bash(shell)上，允许远程命令执行，虽然已经出现了补丁，但不是所有的机器都有更新。使用这个蜜罐，可以用来捕获这个漏洞的利用代码，</p>
+<h3 id="Amun"><a href="#Amun" class="headerlink" title="Amun"></a>Amun</h3><p>Amun蜜罐已经好久没有更新了，这里不做过多的讨论。</p>
+<h3 id="Shockpot"><a href="#Shockpot" class="headerlink" title="Shockpot"></a>Shockpot</h3><p>Shockpot是一个web蜜罐，用来模拟破壳漏洞,CVE-2014-6271 <a href="http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-6271,破壳漏洞是一个影响很广泛的漏洞，影响Mac" target="_blank" rel="external">http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-6271,破壳漏洞是一个影响很广泛的漏洞，影响Mac</a> OsX,Linux和Unix，这个漏洞产生在GNU Bash(shell)上，允许远程命令执行，虽然已经出现了补丁，但不是所有的机器都有更新。使用这个蜜罐，可以用来捕获这个漏洞的利用代码，</p>
 <p>关于这个漏洞的详情<a href="https://shellshocker.net/" target="_blank" rel="external">https://shellshocker.net/</a></p>
 <p>部署脚本有一些问题，进入Deploy页面，选择Shockpot对期做一点修改,在＂#Config for supervisor. ＂和＂EOF＂中加入一下代码</p>
 <pre><code>[fetch_public_ip]
@@ -419,7 +418,7 @@ http://bot.whatismyipaddress.com/”]
 curl -H “User-Agent: () { :; }; /bin/ping -c 1 TARGET_HOST_IP” http://SHOCKPOT_IP 
 </code></pre><p>我看看到日志里输出/var/log/shockpot/shockpot.log report</p>
 <p>更多关于破壳的利用<a href="https://blog.cloudflare.com/inside-shellshock/" target="_blank" rel="external">https://blog.cloudflare.com/inside-shellshock/</a></p>
-<h3 id="9-9-Conpot"><a href="#9-9-Conpot" class="headerlink" title="9.9 Conpot"></a>9.9 Conpot</h3><p>Conpot是一个工业控制系统和Scada蜜罐，针对这些类型的攻击是在近几年快速增长，是因为安全在工业系统中要求较低，才造成了现在这种场面，安全专家们也在想办法保护这些脆弱的系统。</p>
+<h3 id="Conpot"><a href="#Conpot" class="headerlink" title="Conpot"></a>Conpot</h3><p>Conpot是一个工业控制系统和Scada蜜罐，针对这些类型的攻击是在近几年快速增长，是因为安全在工业系统中要求较低，才造成了现在这种场面，安全专家们也在想办法保护这些脆弱的系统。</p>
 <p>安装简单，安装完成后需要重启服务，使用supervisorctl status 可以看到一个进程，但是使用netsta 可以看到好几个监听的端口。</p>
 <p>Conpot使用了一些模块，能够提供以下服务</p>
 <pre><code>MODBUS TCP —&gt; tcp/502
@@ -431,7 +430,7 @@ S7COMM —&gt; tcp/102
 
 #!bash
 nmap -sU -p161–script snmp-sysdescr 192.168.10.21
-</code></pre><h3 id="9-10-Glastopf"><a href="#9-10-Glastopf" class="headerlink" title="9.10 Glastopf"></a>9.10 Glastopf</h3><p>Glastopf是最好的web蜜罐，它模拟了很多漏洞，特别是远程文件包含漏洞，可以捕获到攻击只插入的文件．部署依旧很简单，安装完成后重启服务，你会看到一个进程</p>
+</code></pre><h3 id="Glastopf"><a href="#Glastopf" class="headerlink" title="Glastopf"></a>Glastopf</h3><p>Glastopf是最好的web蜜罐，它模拟了很多漏洞，特别是远程文件包含漏洞，可以捕获到攻击只插入的文件．部署依旧很简单，安装完成后重启服务，你会看到一个进程</p>
 <p>模拟的http,mongodb只在本地监听．</p>
 <pre><code>#!bash
 nmap -A -p80 192.168.10.21
@@ -440,7 +439,7 @@ nmap -A -p80 192.168.10.21
 <p>对于这些被下载的文件，我们能够看到它们的md5值，这些文件都保存在/opt/glastopf/data<br>Glastopf是很好配置的，/opt/glastopf/glastopf.cfg配置文件，日志/opt/glastopf/log/glastopf.log.</p>
 <p>官网</p>
 <p><a href="https://www.honeynet.org/sites/default/files/files/KYT-Glastopf-Final_v1.pdf" target="_blank" rel="external">https://www.honeynet.org/sites/default/files/files/KYT-Glastopf-Final_v1.pdf</a></p>
-<h3 id="9-11-dionaea"><a href="#9-11-dionaea" class="headerlink" title="9.11 dionaea"></a>9.11 dionaea</h3><p>dionaea将有漏洞的服务暴露出来，允许攻击者发送保存任何文件，安装简单</p>
+<h3 id="dionaea"><a href="#dionaea" class="headerlink" title="dionaea"></a>dionaea</h3><p>dionaea将有漏洞的服务暴露出来，允许攻击者发送保存任何文件，安装简单</p>
 <p>服务列表</p>
 <pre><code>#!bash
 tcp/5060 —&gt; SIP Protocol
@@ -462,7 +461,7 @@ nmap -sU -sV -p69,5060 192.168.10.21
 </code></pre><p>我们没有修改banner，会被nmap识别，如果需要修改，编辑 /usr/lib/dionaea/python/dionaea这个python文件，需要更加了解他，访问<a href="http://www.securityartwork.es/2014/06/05/avoiding-dionaea-service-identification/?lang=en，配置文件在" target="_blank" rel="external">http://www.securityartwork.es/2014/06/05/avoiding-dionaea-service-identification/?lang=en，配置文件在</a> /etc/dionaea/dionaea.conf,日志保存在/var/dionaea/log/dionaea.log</p>
 <p>使用nessus进行扫描，发现了53个问题，45个info，３个紧急</p>
 <p>我们看到有MS04-007漏洞，这个漏洞能够执行任意代码，通过向主机发送ASN.1编码后的数据包，Metasploit中使用的模块是 “MS04-007 Microsoft ASN.1 Library Bitstring Heap Overflow”，使用Metasploit发起攻击，会返回“The SMB server did not reply to our request”，这种攻击会报告给mhn,攻击的细节保存在/var/dionaea/bistreams/</p>
-<h2 id="0x10-总结"><a href="#0x10-总结" class="headerlink" title="0x10 总结"></a>0x10 总结</h2><p>我们已经大概了解了mhn的总体概况，怎么安装和怎么去部署蜜罐节点，还有这些蜜罐大概的一些情况。如果你清楚你想做的，部署蜜网是很有用的．可以获取攻击者更准确的信息，然后来做防御。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们已经大概了解了mhn的总体概况，怎么安装和怎么去部署蜜罐节点，还有这些蜜罐大概的一些情况。如果你清楚你想做的，部署蜜网是很有用的．可以获取攻击者更准确的信息，然后来做防御。</p>
 <p>在部署蜜罐节点是，尽可能的根据具体情况来组合部署，这样可以是攻击者花费更多的时间，从中获取更多的信息，争取到更多的响应时间。</p>
 <p>例如snort,Glastopf,Dionaea和kippo，在具体部署之前先要好好测试，避免在真实环境中出现意想不到的问题。</p>
 <p>个人的看法： 曾经做过类似的一个东西，不过相比这个来说就有些粗糙了，MHN中支持的开源蜜罐种类很多，基本已经涵盖了现有所有的开源蜜罐，可以根据具体的业务场景来组合。也可以根据具体的场景来做二次开发，因为回传的数据有些简单了。如果是放置在内网中，报警功能就很有必要性，内网中得蜜罐只是为了能够延缓攻击的进度，以及及时发现入侵，从而切断入口。</p>
@@ -530,7 +529,7 @@ nmap -sU -sV -p69,5060 192.168.10.21
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-什么是蜜罐"><span class="nav-number">2.</span> <span class="nav-text">0x01 什么是蜜罐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-现代密网（MHN）"><span class="nav-number">3.</span> <span class="nav-text">0x02 现代密网（MHN）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-MHN的硬件要求"><span class="nav-number">4.</span> <span class="nav-text">0x03 MHN的硬件要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-MHN的安装"><span class="nav-number">5.</span> <span class="nav-text">0x04 MHN的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-MHN服务器安装"><span class="nav-number">6.</span> <span class="nav-text">0x06 MHN服务器安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-排错"><span class="nav-number">7.</span> <span class="nav-text">0x07 排错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x09-蜜罐节点"><span class="nav-number">8.</span> <span class="nav-text">0x09 蜜罐节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-安装蜜罐节点"><span class="nav-number">8.1.</span> <span class="nav-text">9.1 安装蜜罐节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-Wordpot"><span class="nav-number">8.2.</span> <span class="nav-text">9.2 Wordpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-p0f被动指纹识别系统"><span class="nav-number">8.3.</span> <span class="nav-text">9.3 p0f被动指纹识别系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-kippo蜜罐"><span class="nav-number">8.4.</span> <span class="nav-text">9.4 kippo蜜罐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-5-Suricata网络入侵检测和阻止引擎"><span class="nav-number">8.5.</span> <span class="nav-text">9.5 Suricata网络入侵检测和阻止引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-6-snort"><span class="nav-number">8.6.</span> <span class="nav-text">9.6 snort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-7-Amun"><span class="nav-number">8.7.</span> <span class="nav-text">9.7 Amun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-8-Shockpot"><span class="nav-number">8.8.</span> <span class="nav-text">9.8 Shockpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-9-Conpot"><span class="nav-number">8.9.</span> <span class="nav-text">9.9 Conpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-10-Glastopf"><span class="nav-number">8.10.</span> <span class="nav-text">9.10 Glastopf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-11-dionaea"><span class="nav-number">8.11.</span> <span class="nav-text">9.11 dionaea</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x10-总结"><span class="nav-number">9.</span> <span class="nav-text">0x10 总结</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是蜜罐"><span class="nav-number">2.</span> <span class="nav-text">什么是蜜罐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#现代密网（MHN）"><span class="nav-number">3.</span> <span class="nav-text">现代密网（MHN）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MHN的硬件要求"><span class="nav-number">4.</span> <span class="nav-text">MHN的硬件要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MHN的安装"><span class="nav-number">5.</span> <span class="nav-text">MHN的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MHN服务器安装"><span class="nav-number">6.</span> <span class="nav-text">MHN服务器安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排错"><span class="nav-number">7.</span> <span class="nav-text">排错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MNH的web接口"><span class="nav-number">8.</span> <span class="nav-text">MNH的web接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蜜罐节点"><span class="nav-number">9.</span> <span class="nav-text">蜜罐节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装蜜罐节点"><span class="nav-number">9.1.</span> <span class="nav-text">安装蜜罐节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wordpot"><span class="nav-number">9.2.</span> <span class="nav-text">Wordpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#p0f被动指纹识别系统"><span class="nav-number">9.3.</span> <span class="nav-text">p0f被动指纹识别系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kippo蜜罐"><span class="nav-number">9.4.</span> <span class="nav-text">kippo蜜罐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Suricata网络入侵检测和阻止引擎"><span class="nav-number">9.5.</span> <span class="nav-text">Suricata网络入侵检测和阻止引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#snort"><span class="nav-number">9.6.</span> <span class="nav-text">snort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amun"><span class="nav-number">9.7.</span> <span class="nav-text">Amun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shockpot"><span class="nav-number">9.8.</span> <span class="nav-text">Shockpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conpot"><span class="nav-number">9.9.</span> <span class="nav-text">Conpot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Glastopf"><span class="nav-number">9.10.</span> <span class="nav-text">Glastopf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dionaea"><span class="nav-number">9.11.</span> <span class="nav-text">dionaea</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol>
     
     </div>
   </aside>

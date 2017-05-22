@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293148.png">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293149.png">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293150.png">
-<meta property="og:updated_time" content="2017-05-22T08:36:11.101Z">
+<meta property="og:updated_time" content="2017-05-22T08:46:38.841Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自制蜜罐之前端部分">
 <meta name="twitter:description" content="本文作者：netxfly，转载自www.xsec.iohttps://www.xsec.io/2016/7/8/how-to-develop-a-honeypot.html">
@@ -158,8 +158,8 @@ var themeMenus = {};
       
         <p>本文作者：netxfly，转载自www.xsec.io<br><a href="https://www.xsec.io/2016/7/8/how-to-develop-a-honeypot.html" target="_blank" rel="external">https://www.xsec.io/2016/7/8/how-to-develop-a-honeypot.html</a></p>
 <a id="more"></a>
-<h2 id="0x00-自制蜜罐"><a href="#0x00-自制蜜罐" class="headerlink" title="0x00 自制蜜罐"></a>0x00 自制蜜罐</h2><h3 id="0-1-背景"><a href="#0-1-背景" class="headerlink" title="0.1 背景"></a>0.1 背景</h3><p>生产系统的内网部署蜜罐后可以监控到黑客对内网的探测及攻击行为，方便安全工程师第一时间发现被入侵并及时止损，防止出现公司重要数据被窃取却浑然不然的情况。 所以我们有必要在重要业务的内网机房部署蜜罐。</p>
-<h3 id="0-2-需求"><a href="#0-2-需求" class="headerlink" title="0.2 需求"></a>0.2 需求</h3><ol>
+<h2 id="自制蜜罐"><a href="#自制蜜罐" class="headerlink" title="自制蜜罐"></a>自制蜜罐</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>生产系统的内网部署蜜罐后可以监控到黑客对内网的探测及攻击行为，方便安全工程师第一时间发现被入侵并及时止损，防止出现公司重要数据被窃取却浑然不然的情况。 所以我们有必要在重要业务的内网机房部署蜜罐。</p>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ol>
 <li>第一时间发现攻击者</li>
 <li>攻击行为及指纹记录、识别</li>
 <li>覆盖到全部的协议及端口</li>
@@ -172,7 +172,7 @@ var themeMenus = {};
 <li>开发进度滞后，没有覆盖到最新的redis、elastic、stuct2等漏洞的利用的监控</li>
 </ol>
 <p>所以我们有必要自己开发一套易于部署、覆盖全端口全协议及最新漏洞的蜜罐系统。</p>
-<h2 id="0x01-蜜罐架构图"><a href="#0x01-蜜罐架构图" class="headerlink" title="0x01 蜜罐架构图"></a>0x01 蜜罐架构图</h2><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293143.png" alt=""></p>
+<h2 id="蜜罐架构图"><a href="#蜜罐架构图" class="headerlink" title="蜜罐架构图"></a>蜜罐架构图</h2><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293143.png" alt=""></p>
 <ol>
 <li>Agent<ul>
 <li>记录攻击log并发送到server中</li>
@@ -196,8 +196,8 @@ var themeMenus = {};
 </ul>
 </li>
 </ol>
-<h2 id="0x02-Agent的实现"><a href="#0x02-Agent的实现" class="headerlink" title="0x02 Agent的实现"></a>0x02 Agent的实现</h2><p>Agent利用iptables记录了对Agent所有端口的tcp及udp协议的访问log，并用iptables将请求按policy指定的规则转到了后端的攻击行为识别服务器中。</p>
-<h3 id="2-1-iptables基础"><a href="#2-1-iptables基础" class="headerlink" title="2.1 iptables基础"></a>2.1 iptables基础</h3><p>netfilter/iptables（简称为iptables）组成Linux平台下的包过滤防火墙，与大多数的Linux软件一样，这个包过滤防火墙是免费的，它可以代替昂贵的商业防火墙解决方案，完成封包过滤、封包重定向和网络地址转换（NAT）等功能。 Netfilter是Linux操作系统核心层内部的一个数据包处理模块，它具有如下功能：</p>
+<h2 id="Agent的实现"><a href="#Agent的实现" class="headerlink" title="Agent的实现"></a>Agent的实现</h2><p>Agent利用iptables记录了对Agent所有端口的tcp及udp协议的访问log，并用iptables将请求按policy指定的规则转到了后端的攻击行为识别服务器中。</p>
+<h3 id="iptables基础"><a href="#iptables基础" class="headerlink" title="iptables基础"></a>iptables基础</h3><p>netfilter/iptables（简称为iptables）组成Linux平台下的包过滤防火墙，与大多数的Linux软件一样，这个包过滤防火墙是免费的，它可以代替昂贵的商业防火墙解决方案，完成封包过滤、封包重定向和网络地址转换（NAT）等功能。 Netfilter是Linux操作系统核心层内部的一个数据包处理模块，它具有如下功能：</p>
 <ol>
 <li>网络地址转换(Network Address Translate)</li>
 <li>数据包内容修改</li>
@@ -218,29 +218,29 @@ var themeMenus = {};
 <p>iptables内置了4个表，即Filter表、Nat表、Mangle表和Raw表，分别用于实现包过滤、网络地址转换、包重构(修改)和数据跟踪处理。</p>
 <p>这几个表的优先顺序为Raw -&gt; Mangle -&gt; Nat -&gt; Filter。 iptables表和链的结构如下图所示：</p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293145.png" alt=""></p>
-<h3 id="2-2-iptables中的规则表（table）"><a href="#2-2-iptables中的规则表（table）" class="headerlink" title="2.2 iptables中的规则表（table）"></a>2.2 iptables中的规则表（table）</h3><ol>
+<h3 id="iptables中的规则表（table）"><a href="#iptables中的规则表（table）" class="headerlink" title="iptables中的规则表（table）"></a>iptables中的规则表（table）</h3><ol>
 <li>Raw表有两个链：OUTPUT、PREROUTING，作用为决定数据包是否被状态跟踪机制处理</li>
 <li>Mangle表有五个链：PREROUTING、POSTROUTING、INPUT、OUTPUT、FORWARD，作用为修改数据包的服务类型、TTL、并且可以配置路由实现QOS</li>
 <li>Nat表有三个链：PREROUTING、POSTROUTING、OUTPUT，作用为用于网络地址转换</li>
 <li>Filter表有三个链：INPUT、FORWARD、OUTPUT，作用为数据包过滤</li>
 </ol>
-<h3 id="2-3-iptables中的规则链接（chain）"><a href="#2-3-iptables中的规则链接（chain）" class="headerlink" title="2.3 iptables中的规则链接（chain）"></a>2.3 iptables中的规则链接（chain）</h3><ol>
+<h3 id="iptables中的规则链接（chain）"><a href="#iptables中的规则链接（chain）" class="headerlink" title="iptables中的规则链接（chain）"></a>iptables中的规则链接（chain）</h3><ol>
 <li>INPUT——进来的数据包应用此规则链中的策略。</li>
 <li>OUTPUT——外出的数据包应用此规则链中的策略。</li>
 <li>FORWARD——转发数据包时应用此规则链中的策略。</li>
 <li>PREROUTING——对数据包作路由选择前应用此链中的规则，所有的数据包进来的时侯都先由这个链处理。</li>
 <li>POSTROUTING——对数据包作路由选择后应用此链中的规则，所有的数据包出来的时侯都先由这个链处理。</li>
 </ol>
-<h3 id="2-4-iptales中的数据流"><a href="#2-4-iptales中的数据流" class="headerlink" title="2.4 iptales中的数据流"></a>2.4 iptales中的数据流</h3><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293146.png" alt=""></p>
+<h3 id="iptales中的数据流"><a href="#iptales中的数据流" class="headerlink" title="iptales中的数据流"></a>iptales中的数据流</h3><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293146.png" alt=""></p>
 <p>iptables中的数据流可以总结为以下3句话：</p>
 <ol>
 <li>发往本地的包，数据流向为：PREROUTING -&gt; INPUT</li>
 <li>发往其他地址的包，数据流向为：PREROUTING -&gt; FORWARD -&gt; POSTROUTING</li>
 <li>从本地发出的包的数据流向为： OUTPUT -&gt; POSTROUTING</li>
 </ol>
-<h3 id="2-5-iptables规则管理"><a href="#2-5-iptables规则管理" class="headerlink" title="2.5 iptables规则管理"></a>2.5 iptables规则管理</h3><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293147.png" alt=""></p>
+<h3 id="iptables规则管理"><a href="#iptables规则管理" class="headerlink" title="iptables规则管理"></a>iptables规则管理</h3><p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293147.png" alt=""></p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293148.png" alt=""></p>
-<h3 id="2-6-iptables命令参数"><a href="#2-6-iptables命令参数" class="headerlink" title="2.6 iptables命令参数"></a>2.6 iptables命令参数</h3><pre><code>[-t 表名]：该规则所操作的哪个表，可以使用filter、nat等，如果没有指定则默认为filter
+<h3 id="iptables命令参数"><a href="#iptables命令参数" class="headerlink" title="iptables命令参数"></a>iptables命令参数</h3><pre><code>[-t 表名]：该规则所操作的哪个表，可以使用filter、nat等，如果没有指定则默认为filter
 -A：新增一条规则，到该规则链列表的最后一行
 -I：插入一条规则，原本该位置上的规则会往后顺序移动，没有指定编号则为1
 -D：从规则链中删除一条规则，要么输入完整的规则，或者指定规则编号加以删除
@@ -261,7 +261,7 @@ chain名：指定规则表的哪个链，如INPUT、OUPUT、FORWARD、PREROUTING
 -m multiport --dports 80,8080
 -m icmp --icmp-type 8
 &lt;-j 动作&gt;：处理数据包的动作，包括ACCEPT、DROP、REJECT等
-</code></pre><h2 id="0x03-利用shell实现一个demo"><a href="#0x03-利用shell实现一个demo" class="headerlink" title="0x03 利用shell实现一个demo"></a>0x03 利用shell实现一个demo</h2><pre><code>#!/bin/bash
+</code></pre><h2 id="利用shell实现一个demo"><a href="#利用shell实现一个demo" class="headerlink" title="利用shell实现一个demo"></a>利用shell实现一个demo</h2><pre><code>#!/bin/bash
 :&lt;&lt;BLOCK
 Copyright (c) 2016 www.xsec.io
 
@@ -424,7 +424,7 @@ function douzhuanxingyi()
 function jinghuashuiyue()
 {
     /sbin/iptables -t nat -A FIREWALL_IN -i eth0 -p tcp -m tcp --dport 1:65535 -s $ATTACK_IP1 -j DNAT --to-destination $UNREAL_TARGET
-</code></pre><h3 id="3-1-demo代码解读"><a href="#3-1-demo代码解读" class="headerlink" title="3.1 demo代码解读"></a>3.1 demo代码解读</h3><ol>
+</code></pre><h3 id="demo代码解读"><a href="#demo代码解读" class="headerlink" title="demo代码解读"></a>demo代码解读</h3><ol>
 <li>set_ip_forward函数将net.ipv4.ip_forward设为了1，这样才能开启linux的数据转发功能。</li>
 <li>init_policy中利用-N指令新建了不同的chain，目的是为了在将同类的操作放到同一个链中，防止在操作规则的过程中影响到其他的iptables规则。</li>
 <li>set_white_policy为设置白名单，来自白名单的请求直接drop掉，不会转到后端服务器；</li>
@@ -433,7 +433,7 @@ function jinghuashuiyue()
 <li>jinghuashuiyue是使用了动画片《死神》中蓝染的斩魄刀的名字：(幻觉系最强斩魄刀），指将攻击者的所有请求转到一个伪造的地址中，误导攻击者。</li>
 <li>在使用了DNAT后，需要在POSTROUTING链中设置SNAT，每条规则都需要设置，操作麻烦且容易出错，用-j MASQUERADE可以自动完成这些操作</li>
 </ol>
-<h2 id="0x04-golang实现最终的agent"><a href="#0x04-golang实现最终的agent" class="headerlink" title="0x04 golang实现最终的agent"></a>0x04 golang实现最终的agent</h2><p>相比python来说，golang写的程序无任何依赖，直接编译为一个二进制文件就能执行，所以我们选择了golang。 agent的功能为：</p>
+<h2 id="golang实现最终的agent"><a href="#golang实现最终的agent" class="headerlink" title="golang实现最终的agent"></a>golang实现最终的agent</h2><p>相比python来说，golang写的程序无任何依赖，直接编译为一个二进制文件就能执行，所以我们选择了golang。 agent的功能为：</p>
 <ol>
 <li><p>支持配置，配置文件中为策略的URL，转发数据的网卡名</p>
 </li>
@@ -532,7 +532,7 @@ func Stop() {
     // clean iptables rule and chain
     DeletePolicy()
 }
-</code></pre><h2 id="0x05-Server的实现"><a href="#0x05-Server的实现" class="headerlink" title="0x05 Server的实现"></a>0x05 Server的实现</h2><p>蜜罐server使用gopkg.in/mcuadros/go-syslog.v2包实现了一个rsyslog server，将每条收到的rsyslog进行格式化，然后判断是否在白名单中，如果不在白名单中，然后对攻击数据进行计数（超过一定的时间后再开始从0开始计数）， 如果在规定的时间内超过配置的报警的次数后就不会再报了，防止短时间内产生大量的垃圾邮件。</p>
+</code></pre><h2 id="Server的实现"><a href="#Server的实现" class="headerlink" title="Server的实现"></a>Server的实现</h2><p>蜜罐server使用gopkg.in/mcuadros/go-syslog.v2包实现了一个rsyslog server，将每条收到的rsyslog进行格式化，然后判断是否在白名单中，如果不在白名单中，然后对攻击数据进行计数（超过一定的时间后再开始从0开始计数）， 如果在规定的时间内超过配置的报警的次数后就不会再报了，防止短时间内产生大量的垃圾邮件。</p>
 <p>比如可以把策略设为：同一个来源的攻击者，3分钟内只发1封报警邮件，报警策略的代码如下：</p>
 <pre><code>// check if send alarm mail
 func AlarmPolicy(redisConfig RedisConfig, sysLog map[string]interface{}) (isAlarm bool) {
@@ -655,7 +655,7 @@ func Alarm(redisConfig RedisConfig, sysLog map[string]interface{}, subject strin
 </code></pre><p>蜜罐的测试效果： </p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293149.png" alt=""></p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293150.png" alt=""></p>
-<h2 id="0x06-扩展功能"><a href="#0x06-扩展功能" class="headerlink" title="0x06 扩展功能"></a>0x06 扩展功能</h2><p>以上的Agent放在重要系统的内网网段为一个支持所有协议和端口的蜜罐，其实也可以改为一个适用于小网站的防火墙放在外网。 做成防火墙需要做的改动如下：</p>
+<h2 id="扩展功能"><a href="#扩展功能" class="headerlink" title="扩展功能"></a>扩展功能</h2><p>以上的Agent放在重要系统的内网网段为一个支持所有协议和端口的蜜罐，其实也可以改为一个适用于小网站的防火墙放在外网。 做成防火墙需要做的改动如下：</p>
 <ol>
 <li>去掉数据转发到后端的功能</li>
 </ol>
@@ -666,7 +666,7 @@ func Alarm(redisConfig RedisConfig, sysLog map[string]interface{}, subject strin
 
 - 如果1分钟内同一个IP的请求超过300，可以将攻击者的所有请求原封不动的反弹回去（斗转星移）
 - 如果1分钟内同一个IP的请求超过600，直接将攻击者的IP Block掉，禁止访问。
-</code></pre><h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://n0where.net/how-does-it-work-iptables/" target="_blank" rel="external">https://n0where.net/how-does-it-work-iptables/</a></p>
+</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://n0where.net/how-does-it-work-iptables/" target="_blank" rel="external">https://n0where.net/how-does-it-work-iptables/</a></p>
 <p><a href="http://txgcwm.github.io/blog/2013/07/25/linuxxia-iptablesfang-huo-qiang-yuan-li-ji-shi-yong/" target="_blank" rel="external">http://txgcwm.github.io/blog/2013/07/25/linuxxia-iptablesfang-huo-qiang-yuan-li-ji-shi-yong/</a></p>
 <p><a href="https://segmentfault.com/a/1190000002540601" target="_blank" rel="external">https://segmentfault.com/a/1190000002540601</a></p>
 
@@ -733,7 +733,7 @@ func Alarm(redisConfig RedisConfig, sysLog map[string]interface{}, subject strin
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-自制蜜罐"><span class="nav-number">1.</span> <span class="nav-text">0x00 自制蜜罐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-背景"><span class="nav-number">1.1.</span> <span class="nav-text">0.1 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-需求"><span class="nav-number">1.2.</span> <span class="nav-text">0.2 需求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-蜜罐架构图"><span class="nav-number">2.</span> <span class="nav-text">0x01 蜜罐架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Agent的实现"><span class="nav-number">3.</span> <span class="nav-text">0x02 Agent的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-iptables基础"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 iptables基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-iptables中的规则表（table）"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 iptables中的规则表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-iptables中的规则链接（chain）"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 iptables中的规则链接（chain）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-iptales中的数据流"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 iptales中的数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-iptables规则管理"><span class="nav-number">3.5.</span> <span class="nav-text">2.5 iptables规则管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-iptables命令参数"><span class="nav-number">3.6.</span> <span class="nav-text">2.6 iptables命令参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-利用shell实现一个demo"><span class="nav-number">4.</span> <span class="nav-text">0x03 利用shell实现一个demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-demo代码解读"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 demo代码解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-golang实现最终的agent"><span class="nav-number">5.</span> <span class="nav-text">0x04 golang实现最终的agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-Server的实现"><span class="nav-number">6.</span> <span class="nav-text">0x05 Server的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-扩展功能"><span class="nav-number">7.</span> <span class="nav-text">0x06 扩展功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料"><span class="nav-number">7.0.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自制蜜罐"><span class="nav-number">1.</span> <span class="nav-text">自制蜜罐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.2.</span> <span class="nav-text">需求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蜜罐架构图"><span class="nav-number">2.</span> <span class="nav-text">蜜罐架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Agent的实现"><span class="nav-number">3.</span> <span class="nav-text">Agent的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables基础"><span class="nav-number">3.1.</span> <span class="nav-text">iptables基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables中的规则表（table）"><span class="nav-number">3.2.</span> <span class="nav-text">iptables中的规则表（table）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables中的规则链接（chain）"><span class="nav-number">3.3.</span> <span class="nav-text">iptables中的规则链接（chain）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptales中的数据流"><span class="nav-number">3.4.</span> <span class="nav-text">iptales中的数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables规则管理"><span class="nav-number">3.5.</span> <span class="nav-text">iptables规则管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables命令参数"><span class="nav-number">3.6.</span> <span class="nav-text">iptables命令参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用shell实现一个demo"><span class="nav-number">4.</span> <span class="nav-text">利用shell实现一个demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#demo代码解读"><span class="nav-number">4.1.</span> <span class="nav-text">demo代码解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#golang实现最终的agent"><span class="nav-number">5.</span> <span class="nav-text">golang实现最终的agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server的实现"><span class="nav-number">6.</span> <span class="nav-text">Server的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展功能"><span class="nav-number">7.</span> <span class="nav-text">扩展功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol>
     
     </div>
   </aside>

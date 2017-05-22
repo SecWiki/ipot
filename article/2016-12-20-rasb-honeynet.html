@@ -20,7 +20,7 @@
 <meta property="og:description" content="本文作者：，转载自MottoINhttp://www.mottoin.com/94306.html">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293141.png">
 <meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293142.gif">
-<meta property="og:updated_time" content="2017-05-22T07:57:59.687Z">
+<meta property="og:updated_time" content="2017-05-22T08:44:07.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用树莓派搭建小型honeynet">
 <meta name="twitter:description" content="本文作者：，转载自MottoINhttp://www.mottoin.com/94306.html">
@@ -152,21 +152,21 @@ var themeMenus = {};
       
         <p>本文作者：，转载自MottoIN<br><a href="http://www.mottoin.com/94306.html" target="_blank" rel="external">http://www.mottoin.com/94306.html</a></p>
 <a id="more"></a>
-<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>树莓派小巧且耗费的电量非常少，如果你有一两个备用的，你可以使用他们来搭建蜜罐。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>树莓派小巧且耗费的电量非常少，如果你有一两个备用的，你可以使用他们来搭建蜜罐。</p>
 <p>温馨提示：尽管蜜罐软件通常与底层操作系统隔离，但是也有存在错误以及发生事故的可能，所以不应该在托管蜜罐软件的系统上运行任何服务。</p>
 <p>不建议在共享网络环境中运行无人值守的蜜罐。即使是低端的路由器现在也有某种DMZ选项可用于此活动，但更好的选择是使用具有严格和带宽限制的专用IP网络。</p>
 <p>蜜罐及其环境应始终被视为已经沦陷的，下载到蜜罐的文件和脚本可能有危险，不应在其他地方运行。如果你已经厌倦了对入侵蜜罐的人的观察分析，可以彻底擦除它，完全重新安装。</p>
-<h2 id="0x01-安装"><a href="#0x01-安装" class="headerlink" title="0x01 安装"></a>0x01 安装</h2><p>我的一个蜜罐实验室包括两个树莓派。一个处理SSH和Telnet连接，而另一个处理HTTP、SMTP、POP3和IRC。如下所述，在必要的时候，他们之间还可以进行通信。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我的一个蜜罐实验室包括两个树莓派。一个处理SSH和Telnet连接，而另一个处理HTTP、SMTP、POP3和IRC。如下所述，在必要的时候，他们之间还可以进行通信。</p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293141.png" alt=""></p>
 <p>在本实验中，两个树莓派节点都运行自己的缓存DNS服务器和NTP服务器。 两者都由IDS监控，并且监控非常频繁，如果需要进一步分析，则保存所有入站和出站网络流量（完全数据包捕获）。</p>
-<h2 id="0x02-Cowire"><a href="#0x02-Cowire" class="headerlink" title="0x02 Cowire"></a>0x02 Cowire</h2><p>SSH/telnet蜜罐运行Cowrie，一个非常好的基于Kippo的蜜罐软件。Cowrie模仿SSH和telnet服务，并将接受基于可配置用户/密码列表的登录尝试。成功登录后，入侵者将发现自己在完全虚拟化的文件系统中，很多可用的命令和二进制文件。执行的每个操作都将被记录，如果入侵者下载工具包或其他工具以进一步利用，则每个下载的文件的副本将被存储在虚拟化环境外部以供分析。</p>
+<h2 id="Cowire"><a href="#Cowire" class="headerlink" title="Cowire"></a>Cowire</h2><p>SSH/telnet蜜罐运行Cowrie，一个非常好的基于Kippo的蜜罐软件。Cowrie模仿SSH和telnet服务，并将接受基于可配置用户/密码列表的登录尝试。成功登录后，入侵者将发现自己在完全虚拟化的文件系统中，很多可用的命令和二进制文件。执行的每个操作都将被记录，如果入侵者下载工具包或其他工具以进一步利用，则每个下载的文件的副本将被存储在虚拟化环境外部以供分析。</p>
 <p>Cowrie可以配置为直接记录到确定的数据库、Splunk、Elasticsearch以及普通文本和JSON等常规日志文件中。还有一个选项用于将下载的文件提交到VirusTotal进行分析。</p>
-<h2 id="0x03-InetSim"><a href="#0x03-InetSim" class="headerlink" title="0x03 InetSim"></a>0x03 InetSim</h2><p>另一个蜜罐节点运行InetSim，一个模拟多个服务的蜜罐软件，纯文本和加密（SSL/TLS）。 几乎每个服务参数都可以被入侵者或其他访问者配置。不是所有的入侵者都会对运行在AIX/370主机上的IIS服务器产生反应。</p>
+<h2 id="InetSim"><a href="#InetSim" class="headerlink" title="InetSim"></a>InetSim</h2><p>另一个蜜罐节点运行InetSim，一个模拟多个服务的蜜罐软件，纯文本和加密（SSL/TLS）。 几乎每个服务参数都可以被入侵者或其他访问者配置。不是所有的入侵者都会对运行在AIX/370主机上的IIS服务器产生反应。</p>
 <p>当查询HTTP请求时，InetSim将很乐意为基于MIME类型预配置的任何内容提供服务，如果没有，则为默认值。 使用POST的HTTP提交将存储在单个文件中。例如，最近的Mirai僵尸网络，分析postdata文件已经有助于识别不断变化的服务器漏洞下载第2阶段恶意软件。</p>
 <p>InetSim的SMTP进程可以配置为已认证的邮件中继。它将接受和记录提交的电子邮件，但显然永远不会发送它。除了收集入侵者将用于获取访问权限的凭据之外，InetSim还将存储提交到此伪造邮件服务器的每个邮件的内容以进行传送。 由于通过此蜜罐提交的邮件接近100％垃圾邮件，除了零星的邮件报告发现一个可利用的继电器，单独的计划任务将自动将此邮件提供给Pyzor以改进其垃圾邮件数据库。目前，该蜜罐每天提交5000至2万封邮件。</p>
-<h2 id="0x04-协同工作"><a href="#0x04-协同工作" class="headerlink" title="0x04 协同工作"></a>0x04 协同工作</h2><p>因为很多获得Cowrie蜜罐SSH访问的人尝试使用它作为发送垃圾邮件或提交链接垃圾邮件或论坛垃圾邮件的bouncer，Cowrie非常方便地提供重定向出站请求。 默认情况下不允许出站连接，让攻击者看起来象连接超时，但重定向将允许指定的端口到达配置的目标。 对于在InetSim蜜罐上运行的每个假服务，来自Cowrie的出站连接将终止在那里。 直接使用SMTP和通过SSH隧道使用SMTP这两个垃圾邮件发送者将到达InetSim蜜罐。 在Cowrie中，重定向配置如下（在本例中为25端口）：</p>
+<h2 id="协同工作"><a href="#协同工作" class="headerlink" title="协同工作"></a>协同工作</h2><p>因为很多获得Cowrie蜜罐SSH访问的人尝试使用它作为发送垃圾邮件或提交链接垃圾邮件或论坛垃圾邮件的bouncer，Cowrie非常方便地提供重定向出站请求。 默认情况下不允许出站连接，让攻击者看起来象连接超时，但重定向将允许指定的端口到达配置的目标。 对于在InetSim蜜罐上运行的每个假服务，来自Cowrie的出站连接将终止在那里。 直接使用SMTP和通过SSH隧道使用SMTP这两个垃圾邮件发送者将到达InetSim蜜罐。 在Cowrie中，重定向配置如下（在本例中为25端口）：</p>
 <pre><code>forward_redirect_25 = inetsim-honeypot:25
-</code></pre><h2 id="0x05-有趣的部分"><a href="#0x05-有趣的部分" class="headerlink" title="0x05 有趣的部分"></a>0x05 有趣的部分</h2><p>运行提供有关当前攻击、僵尸网络、rootkit、木马和其他工具信息的蜜罐。通过正确配置的日志记录，它们提供了连续有用的信息流，例如频繁地尝试用户名/密码组合，下载rootkit的URL或IP地址，并且通过使用GeoIP信息，将很容易暴露入侵者来自哪里 。</p>
+</code></pre><h2 id="有趣的部分"><a href="#有趣的部分" class="headerlink" title="有趣的部分"></a>有趣的部分</h2><p>运行提供有关当前攻击、僵尸网络、rootkit、木马和其他工具信息的蜜罐。通过正确配置的日志记录，它们提供了连续有用的信息流，例如频繁地尝试用户名/密码组合，下载rootkit的URL或IP地址，并且通过使用GeoIP信息，将很容易暴露入侵者来自哪里 。</p>
 <p>Cowrie还提供了一个用于重播已登录会话的工具，显示入侵期间发生的具体情况。 僵尸网络和脚本通常是可预测的，但现在又是一个尝试…</p>
 <p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/15946134293142.gif" alt=""></p>
 <p>大多数入侵都是自动机器人，但上图这一个看起来象是人为的（充满疑问）。</p>
@@ -234,7 +234,7 @@ var themeMenus = {};
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-安装"><span class="nav-number">2.</span> <span class="nav-text">0x01 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Cowire"><span class="nav-number">3.</span> <span class="nav-text">0x02 Cowire</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-InetSim"><span class="nav-number">4.</span> <span class="nav-text">0x03 InetSim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-协同工作"><span class="nav-number">5.</span> <span class="nav-text">0x04 协同工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-有趣的部分"><span class="nav-number">6.</span> <span class="nav-text">0x05 有趣的部分</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cowire"><span class="nav-number">3.</span> <span class="nav-text">Cowire</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InetSim"><span class="nav-number">4.</span> <span class="nav-text">InetSim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协同工作"><span class="nav-number">5.</span> <span class="nav-text">协同工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有趣的部分"><span class="nav-number">6.</span> <span class="nav-text">有趣的部分</span></a></li></ol>
     
     </div>
   </aside>
