@@ -1212,7 +1212,7 @@ a.article-title:hover {
   border-color: #eef1f8;
   border-width: 1px 0;
   overflow: auto;
-  color: $highlight-foreground;
+  color: #4d4d4c;
   line-height: 22.400000000000002px;
 }
 .article-entry .highlight .gutter pre,
@@ -1249,7 +1249,7 @@ a.article-title:hover {
 }
 .article-entry .highlight figcaption {
   font-size: 0.85em;
-  color: $highlight-comment;
+  color: #8e908c;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -1272,7 +1272,7 @@ a.article-title:hover {
   height: 22.400000000000002px;
 }
 .article-entry .highlight .line.marked {
-  background: $highlight-selection;
+  background: #d6d6d6;
 }
 .article-entry .gist {
   margin: 0 -20px;
@@ -1306,7 +1306,7 @@ a.article-title:hover {
 }
 .article-entry .gist .gist-file .gist-meta {
   background: #f8f8f8;
-  color: $highlight-comment;
+  color: #8e908c;
   font: 0.85em -apple-system, "Arial", BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   text-shadow: 0 0;
   padding: 0;
@@ -1322,7 +1322,7 @@ a.article-title:hover {
 }
 pre .comment,
 pre .title {
-  color: $highlight-comment;
+  color: #8e908c;
 }
 pre .variable,
 pre .attribute,
@@ -1336,7 +1336,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: $highlight-red;
+  color: #c82829;
 }
 pre .number,
 pre .preprocessor,
@@ -1344,12 +1344,12 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: $highlight-orange;
+  color: #fb6d19;
 }
 pre .class,
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: $highlight-green;
+  color: #718c00;
 }
 pre .string,
 pre .value,
@@ -1357,10 +1357,10 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: $highlight-green;
+  color: #718c00;
 }
 pre .css .hexcolor {
-  color: $highlight-aqua;
+  color: #3e999f;
 }
 pre .function,
 pre .python .decorator,
@@ -1370,95 +1370,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: $highlight-blue;
+  color: #4271ae;
 }
 pre .keyword,
 pre .javascript .function {
-  color: $highlight-purple;
-}
-pre {
-  color: #525252;
-}
-pre .function .keyword,
-pre .constant {
-  color: #0092db;
-}
-pre .keyword,
-pre .attribute {
-  color: #e96900;
-}
-pre .number,
-pre .literal {
-  color: #ae81ff;
-}
-pre .tag,
-pre .tag .title,
-pre .change,
-pre .winutils,
-pre .flow,
-pre .lisp .title,
-pre .clojure .built_in,
-pre .nginx .title,
-pre .tex .special {
-  color: #2973b7;
-}
-pre .symbol,
-pre .symbol .string,
-pre .value,
-pre .regexp {
-  color: #42b983;
-}
-pre .title {
-  color: #83b917;
-}
-pre .tag .value,
-pre .string,
-pre .subst,
-pre .haskell .type,
-pre .preprocessor,
-pre .ruby .class .parent,
-pre .built_in,
-pre .sql .aggregate,
-pre .django .template_tag,
-pre .django .variable,
-pre .smalltalk .class,
-pre .javadoc,
-pre .django .filter .argument,
-pre .smalltalk .localvars,
-pre .smalltalk .array,
-pre .attr_selector,
-pre .pseudo,
-pre .addition,
-pre .stream,
-pre .envvar,
-pre .apache .tag,
-pre .apache .cbracket,
-pre .tex .command,
-pre .prompt {
-  color: #42b983;
-}
-pre .comment,
-pre .java .annotation,
-pre .python .decorator,
-pre .template_comment,
-pre .pi,
-pre .doctype,
-pre .shebang,
-pre .apache .sqbracket,
-pre .tex .formula {
-  color: #b3b3b3;
-}
-pre .deletion {
-  color: #ba4545;
-}
-pre .coffeescript .javascript,
-pre .javascript .xml,
-pre .tex .formula,
-pre .xml .javascript,
-pre .xml .vbscript,
-pre .xml .css,
-pre .xml .cdata {
-  opacity: 0.5;
+  color: #8959a8;
 }
 @media screen and (max-width: 479px) {
   #mobile-nav {
