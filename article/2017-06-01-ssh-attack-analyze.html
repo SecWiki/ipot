@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从蜜罐数据到ssh蜜罐的典型攻击分析 | 蜜罐技术研究小组</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="honeypot, honeynet, sec-wiki, cyber, security" />
+  
+  
+  
+  
+  <meta name="description" content="本文作者：360天眼实验室，转载自安全客http://bobao.360.cn/learning/detail/3929.html">
+<meta name="keywords" content="攻击分析,SSH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从蜜罐数据到SSH蜜罐的典型攻击分析">
+<meta property="og:url" content="http://ipot.sec-wiki.com/article/2017-06-01-ssh-attack-analyze.html">
+<meta property="og:site_name" content="蜜罐技术研究小组">
+<meta property="og:description" content="本文作者：360天眼实验室，转载自安全客http://bobao.360.cn/learning/detail/3929.html">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t013c848a0ba15b8f8a.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01bce58b3ef17f4c02.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01c15e32ee0f142c6a.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t0136047c41771c3e8c.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01a6b0de9bcce45ec5.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01bb5893bb349e43a6.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01fc715157de112862.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t012cb3584b8bd032d8.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01347a9b96dfeeab2a.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01f3104fe7159d27d5.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t0115752906ef8dfe3d.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t015376138f97bf95bb.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01fbafe3e25e0e1532.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01431d117988a70fd6.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01cd5c4524c427d9e7.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01ef276a2f7d13720d.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01ec7571e992795eab.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t016cb26f59383b9565.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01c5af3d73bf88f067.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01625b88a4af97b49f.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01584e2ab62139851f.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01a4c395c30982b143.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t01d1c3b721ea1d93c7.png">
+<meta property="og:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t013bf7b9286b4e0572.png">
+<meta property="og:updated_time" content="2017-06-09T06:47:24.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从蜜罐数据到SSH蜜罐的典型攻击分析">
+<meta name="twitter:description" content="本文作者：360天眼实验室，转载自安全客http://bobao.360.cn/learning/detail/3929.html">
+<meta name="twitter:image" content="http://7xr3oj.com1.z0.glb.clouddn.com/t013c848a0ba15b8f8a.png">
+  
+    <link rel="alternate" href="/atom.xml" title="蜜罐技术研究小组" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "主页"; 
+
+  themeMenus["/projects"] = "开源项目汇总"; 
+
+  themeMenus["/papers"] = "相关研究论文"; 
+
+  themeMenus["/datasets"] = "蜜罐数据共享"; 
+
+  themeMenus["/about"] = "关于我们"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="500px" height="124px" alt="Hike News" src=" /css/images/logo.jpg">
+              </a>
+            
+          </h1>
+
+          
+            <div class="site-description">一个专注于蜜罐技术研究与交流的小站</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">主页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/projects">开源项目汇总</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/papers">相关研究论文</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/datasets">蜜罐数据共享</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于我们</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-ssh-attack-analyze" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      从蜜罐数据到SSH蜜罐的典型攻击分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/article/2017-06-01-ssh-attack-analyze.html" class="article-date">
+	  <time datetime="2017-06-01T06:16:04.000Z" itemprop="datePublished">六月 1, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文作者：360天眼实验室，转载自安全客<br><a href="http://bobao.360.cn/learning/detail/3929.html" target="_blank" rel="external">http://bobao.360.cn/learning/detail/3929.html</a></p>
+<a id="more"></a>
+<h2 id="蜜罐整体介绍"><a href="#蜜罐整体介绍" class="headerlink" title="蜜罐整体介绍"></a>蜜罐整体介绍</h2><p>随着威胁情报的兴起和虚拟化技术的发展，蜜罐技术也得到了新的发展。可以通过虚拟机来实现高交互蜜罐，以及通过docker实现的业务型蜜罐，不再像是以前需要昂贵硬件设备的部署支撑，大大减少了蜜罐的部署成本。</p>
+<p>蜜罐高保真高质量的数据集把安全人员从以前海量日志分析的繁琐过程中解脱出来，对于蜜罐的连接访问都是攻击信息，并且不再像以前的特征分析具有一定的滞后性，可以用于捕获新型的攻击和方法。</p>
+<p>360天眼实验室于2016年中旬运营了一套蜜罐系统，发展至今已相对成熟，蜜罐节点遍布世界五大洲，覆盖了20多个国家，涵盖企业服务、工控服务等常见端口。</p>
+<h3 id="1）-蜜罐部署"><a href="#1）-蜜罐部署" class="headerlink" title="1） 蜜罐部署"></a>1） 蜜罐部署</h3><p>目前的蜜罐集群集管理、监控、数据收集与分析，实现基本全自动化流程。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t013c848a0ba15b8f8a.png" alt=""></p>
+<h3 id="2）-总体数据量"><a href="#2）-总体数据量" class="headerlink" title="2） 总体数据量"></a>2） 总体数据量</h3><p>目前我们的蜜罐日志每天以近10W的数量增长。随着蜜罐数量的增加，这个数据还会进一步增长。</p>
+<p>攻击IP的地理分布图，攻击IP遍布全球，其中东南亚和南美最多。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01bce58b3ef17f4c02.png" alt=""></p>
+<p>下面是以2016年11月以来的攻击IP每日访问情况。其中来自俄罗斯的某IP日访问日志条数达到88万条。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01c15e32ee0f142c6a.png" alt=""></p>
+<p>攻击端口统计，可以看出攻击者对哪些端口比较感兴趣，也能在第一时间发现基于某个端口的攻击事件的爆发。比如，通过统计4月份以来的端口访问情况，分别发现在4月中旬和5月中旬有对445端口扫描的小高峰，这与SMB漏洞的爆发不无关系。而基于6881端口的访问存在几次暴增的访问流量，可能跟P2P探测有关。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t0136047c41771c3e8c.png" alt=""></p>
+<h2 id="SSH蜜罐（Cowrie）典型攻击分析"><a href="#SSH蜜罐（Cowrie）典型攻击分析" class="headerlink" title="SSH蜜罐（Cowrie）典型攻击分析"></a>SSH蜜罐（Cowrie）典型攻击分析</h2><h3 id="1）SSH蜜罐分析"><a href="#1）SSH蜜罐分析" class="headerlink" title="1）SSH蜜罐分析"></a>1）SSH蜜罐分析</h3><p>下面我们以SSH蜜罐（22端口）来介绍我们通过蜜罐数据发现的典型攻击。今年4月10日以来成功爆破SSH蜜罐的统计数据，其中4月中旬达到了一个峰值。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01a6b0de9bcce45ec5.png" alt=""></p>
+<p>蜜罐中发现的用于自动化爆破的用户名、密码排行如下。其中，root/12345还是黑客最喜欢探测的账号口令。</p>
+<p>用户名TOP 10：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01bb5893bb349e43a6.png" alt=""></p>
+<p>密码TOP 10：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01fc715157de112862.png" alt=""></p>
+<p>攻击者在成功入侵蜜罐后，一般都会执行相关命令。比较靠前的有意思的命令如下，其中来自法国的46.218.149.85频繁在众多命令中出现，充当了恶意下载站的角色。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t012cb3584b8bd032d8.png" alt=""></p>
+<p>另外，引起全球震惊的Mirai僵尸网络于2016年10月份曾令美国多个城市出现互联网瘫痪情况。收集到的Mirai的恶意样本如下：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01347a9b96dfeeab2a.png" alt=""></p>
+<h3 id="2）典型攻击分析"><a href="#2）典型攻击分析" class="headerlink" title="2）典型攻击分析"></a>2）典型攻击分析</h3><p>从蜜罐数据来看，我们选择了SSH攻击当中较为常见的两种：</p>
+<p>1）僵尸病毒投放： 通过爆破成功登陆后下载恶意软件（僵尸病毒），使得机器沦为肉鸡，以便实施进一步的攻击；</p>
+<p>2）SSHTunnel跳板攻击： 将蜜罐作为跳板，利用蜜罐扫描或攻击其他机器，我们发现的是利用蜜罐去爆破一些金融电商的登录入口。</p>
+<p>a）僵尸病毒投放分析</p>
+<p>恶意样本从命名方式来看，主要有两种。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01f3104fe7159d27d5.png" alt=""></p>
+<p>第一种是以常见的linux程序来命名，如sh，wget；第二种是以tty来命名。命名方式比较隐蔽，加大了管理人员的排查难度。</p>
+<p>我们从中抽取一条典型的攻击为例进行分析。5月17日，源IP为94.102.52.195对我们的蜜罐进行ssh爆破，然后通过root/admin登陆成功。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t0115752906ef8dfe3d.png" alt=""></p>
+<p>进入到shell之后，可以看到挑选了几个目录然后通过wget，tftp，ftpget三种方法来下载恶意的shell脚本</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t015376138f97bf95bb.png" alt=""></p>
+<p>通过查看shell脚本发现，3种方式下载的恶意脚本是一样的，这应该是攻击者为了确保能下载成功。Shell脚本如下：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01fbafe3e25e0e1532.png" alt=""></p>
+<p>这次攻击下载的恶意样本如下：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01431d117988a70fd6.png" alt=""></p>
+<p>VirusTotal的检测结果:</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01cd5c4524c427d9e7.png" alt=""></p>
+<p>通过比较，这一系列的样本功能类似，但是适配了不同的CPU架构，保证了能在多个平台运行。部分功能函数截图：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01ef276a2f7d13720d.png" alt=""></p>
+<p>可以看出功能很齐全，包括执行命令（processCmd），更新样本（UpdateBins），获取公网ip（getOutIP），清除history（ClearHistory）等。其中sendCNC函数引起了我的兴趣，google了一下，然后发现了以下部分：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01ec7571e992795eab.png" alt=""></p>
+<p>这三个的代码一样。查看了一番，发现代码存在的UserAgent与恶意样本里的字符串非常相似，经过函数的比较，发现这应该就是攻击者使用的恶意程序。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t016cb26f59383b9565.png" alt=""></p>
+<p>而且还有作者的签名，是由Gr1n1337所写</p>
+<p>其中，最早的一个搜索结果显示是7个月前所建，而我们最早搜集到的恶意样本是2016年10月，与该结果相符。而且还带有该恶意样本的介绍，是最强大的telnet botnet。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01c5af3d73bf88f067.png" alt=""></p>
+<p>通过源代码分析，该恶意样本是一种IOT病毒，分为Client端和Server端，Server端是攻击者的控制端，Client端会接收控制端的命令执行相应操作，并且会扫描其他存在弱口令的ssh/telnet设备进行传播。</p>
+<p>b） SSHTunel跳板攻击</p>
+<p>我们在分析跳板攻击方式时，IP为5.45.86.133引起了我们的兴趣。</p>
+<p>攻击时间截图如下，从图中可以看出该IP在2016年7月开始对我们的蜜罐进行尝试攻击，在2017年2月1号攻击次数达到顶峰28W次，最后在2017年3月31后停止了攻击。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01625b88a4af97b49f.png" alt=""></p>
+<p>我们通过蜜罐的日志完整地复现了该IP的攻击时间线。</p>
+<p>2016年7月到9月：</p>
+<p>这段时间攻击者的攻击行为较少，还处于试探阶段，只是请求了几个IP的80端口。典型的攻击如下，从5556端口访问目的IP的80端口</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01584e2ab62139851f.png" alt=""></p>
+<p>2016年9月到10月：</p>
+<p>这段时间，攻击次数逐渐增多，到9月中旬到达顶峰13000多次。这段时间主要是请求46.4.100.47的80端口和62.210.136.117的81端口。其中46.4.100.47是德国Hetzner Online公司的IP，而62.210.136.117是法国IDC 机房的IP。</p>
+<p>2016年10月到11月：</p>
+<p>攻击者沉寂了下去，一个月只有20多条记录</p>
+<p>2016年11月到2017年1月：</p>
+<p>攻击者又开始活跃起来，主要的请求目标还是62.210.136.117，请求大多数集中在11月的下旬，而12月的请求比较平均，12月20号后请求消失</p>
+<p>2017年1月到3月：</p>
+<p>攻击者在沉寂了一段时间后，于1月13日活跃了一下，对<a href="https://shop.selectflavour.com网站做了一段时间爆破，然后又沉寂到2月初的前3天，这几天攻击者的请求有了爆炸式的增长，对多个电商、金融网站进行登陆的暴力破解，其中包括creditonebank和ebay，还有一些Wordpress网站的爆破。" target="_blank" rel="external">https://shop.selectflavour.com网站做了一段时间爆破，然后又沉寂到2月初的前3天，这几天攻击者的请求有了爆炸式的增长，对多个电商、金融网站进行登陆的暴力破解，其中包括creditonebank和ebay，还有一些Wordpress网站的爆破。</a></p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01a4c395c30982b143.png" alt=""></p>
+<p>其中，signin.m.ebay.in是Ebay移动端登录页面。</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t01d1c3b721ea1d93c7.png" alt=""></p>
+<p>关于端口转发，举个栗子：</p>
+<p><img src="http://7xr3oj.com1.z0.glb.clouddn.com/t013bf7b9286b4e0572.png" alt=""></p>
+<p>如果知道了跳板机的SSH密码，使用如下命令即可实现SSH端口转发：</p>
+<pre><code>ssh -f -N -L 3307:172.16.1.30:3306 wanghua@ssh.xyz.com -p8822
+</code></pre><p>从攻击者的整个时间线来看，他们的攻击行为是非常有规律的，一旦爆发一次后，就会销声匿迹一段时间。持续的时间也比较长，从2016年7月到2017年3月，持续了半年的时间。攻击的目标非常明确，大部分集中在对于金融和电商的攻击，而且都是以爆破密码为主，所以可以猜测应该是一股有组织的团伙在进行批量的撞库。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>通过对于SSH蜜罐数据的分析，我们可以找出许多有意思的攻击手法。同时，通过对日志的分析，我们也可以用时间线将攻击者的整个攻击流程做一个完整的梳理。随着这些数据量的增多，预测攻击者的下次攻击也并非不可能，从而形成新的威胁情报。</p>
+<p>威胁情报带动了蜜罐技术的发展，而蜜罐收集的高价值数据反过来对威胁情报也是一个很好的补充，二者相辅相成，缺一不可。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://thehackernews.com/2015/11/what-is-cyber-threat-intelligence.html" target="_blank" rel="external">http://thehackernews.com/2015/11/what-is-cyber-threat-intelligence.html</a> </p>
+<p><a href="https://en.wikipedia.org/wiki/Honeypot_(computing" target="_blank" rel="external">https://en.wikipedia.org/wiki/Honeypot_(computing</a>) </p>
+<p><a href="https://github.com/DavidOfficiel/botnet" target="_blank" rel="external">https://github.com/DavidOfficiel/botnet</a> </p>
+<p><a href="http://www.nothink.org/honeypot_ssh.php" target="_blank" rel="external">http://www.nothink.org/honeypot_ssh.php</a> </p>
+<p><a href="https://www.virustotal.com/" target="_blank" rel="external">https://www.virustotal.com/</a> </p>
+
+        
+      
+
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/article/">article</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/攻击分析/">攻击分析</a></li></ul>
+
+      
+        
+	<!-- 网易云跟帖 start -->
+	<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+	<script>
+	  var cloudTieConfig = {
+	    url: document.location.href, 
+	    sourceId: "",
+	    productKey: "d1cbabd8a4f44e4d9bfdb45e3b5576fe",
+	    target: "cloud-tie-wrapper"
+	  };
+	</script>
+	<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+	<!-- 网易云跟帖 end -->
+	
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/projects/2017-05-23-honeypot-bukkitpot.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Bukkitpot</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#蜜罐整体介绍"><span class="nav-number">1.</span> <span class="nav-text">蜜罐整体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）-蜜罐部署"><span class="nav-number">1.1.</span> <span class="nav-text">1） 蜜罐部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）-总体数据量"><span class="nav-number">1.2.</span> <span class="nav-text">2） 总体数据量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH蜜罐（Cowrie）典型攻击分析"><span class="nav-number">2.</span> <span class="nav-text">SSH蜜罐（Cowrie）典型攻击分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）SSH蜜罐分析"><span class="nav-number">2.1.</span> <span class="nav-text">1）SSH蜜罐分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）典型攻击分析"><span class="nav-number">2.2.</span> <span class="nav-text">2）典型攻击分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结束语"><span class="nav-number">3.</span> <span class="nav-text">结束语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 蜜罐技术研究小组 All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              <!--本站访客数<span id="busuanzi_value_site_uv"></span>人次 --> 
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/projects" class="mobile-nav-link">开源项目汇总</a>
+  
+    <a href="/papers" class="mobile-nav-link">相关研究论文</a>
+  
+    <a href="/datasets" class="mobile-nav-link">蜜罐数据共享</a>
+  
+    <a href="/about" class="mobile-nav-link">关于我们</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/github.min.css">
+  <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
